@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel da Gigi</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: sans-serif; background: #fff0f5; min-height: 100vh; padding: 20px; }
+    h1 { color: #d63384; text-align: center; margin-bottom: 6px; }
+    p.sub { text-align: center; color: #888; margin-bottom: 24px; font-size: 14px; }
+    .card { background: white; border-radius: 12px; padding: 16px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .card h2 { font-size: 14px; color: #999; text-transform: uppercase; margin-bottom: 12px; }
+    .item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+    .item:last-child { border-bottom: none; }
+    .item-name { font-size: 15px; color: #333; }
+    .toggle { position: relative; width: 48px; height: 26px; }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; inset: 0; background: #ddd; border-radius: 26px; cursor: pointer; transition: .3s; }
+    .slider:before { content: ''; position: absolute; width: 20px; height: 20px; left: 3px; top: 3px; background: white; border-radius: 50%; transition: .3s; }
+    input:checked + .slider { background: #d63384; }
+    input:checked + .slider:before { transform: translateX(22px); }
+    .status { font-size: 12px; color: #999; margin-right: 8px; }
+    .status.pausado { color: #e74c3c; }
+    .btn-pausar-tudo { width: 100%; padding: 14px; background: #d63384; color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 8px; }
+    .btn-pausar-tudo:hover { background: #b02870; }
+  </style>
+</head>
+<body>
+  <h1>🍬 Painel da Gigi</h1>
+  <p class="sub">Docinhos da Gigi — gerencie tudo em um lugar</p>
+
+  <div class="card">
+    <h2>Brigadeiros</h2>
+    <div class="item">
+      <span class="item-name">Brigadeiro de Oreo</span>
+      <div style="display:flex;align-items:center">
+        <span class="status" id="s-oreo">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('oreo')"><span class="slider"></span></label>
+      </div>
+    </div>
+    <div class="item">
+      <span class="item-name">Brigadeiro de Ninho</span>
+      <div style="display:flex;align-items:center">
+        <span class="status" id="s-ninho">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('ninho')"><span class="slider"></span></label>
+      </div>
+    </div>
+    <div class="item">
+      <span class="item-name">Brigadeiro de Kinder</span>
+      <div style="display:flex;align-items:center">
+        <span class="status" id="s-kinder">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('kinder')"><span class="slider"></span></label>
+      </div>
+    </div>
+    <div class="item">
+      <span class="item-name">Brigadeiro de Maracujá</span>
+      <div style="display:flex;align-items:center">
+        <span class="status" id="s-maracuja">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('maracuja')"><span class="slider"></span></label>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Complementos</h2>
+    <div class="item">
+      <span class="item-name">Pedaços de Brownie</span>
+      <div style="display:flex;align-items:center">
+        <span class="status" id="s-brownie">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('brownie')"><span class="slider"></span></label>
+      </div>
+    </div>
+    <div class="item">
+      <span class="item-name">Biscoito Oreo</span>
+      <div style="display:flex;align-items:center">
+        <span class="status" id="s-biscoito">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('biscoito')"><span class="slider"></span></label>
+      </div>
+    </div>
+    <div class="item">
+      <span class="item-name">Nutella</span>
+      <div style="display:flex;align-items:center">
+        <span class="status" id="s-nutella">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('nutella')"><span class="slider"></span></label>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Frutas</h2>
+    <div class="item">
+      <span class="item-name">Morango</span>
+      <div style="display:flex;align-items:center">
+        <span class="status" id="s-morango">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('morango')"><span class="slider"></span></label>
+      </div>
+    </div>
+    <div class="item">
+      <span class="item-name">Banana</span>
+      <div style="display:flex;align-items:center">
+        <span class="status" id="s-banana">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('banana')"><span class="slider"></span></label>
+      </div>
+    </div>
+    <div class="item">
+      <span class="item-name">Uva</span>
+      <div style="display:flex;align-items:center">
+        <span class="status" id="s-uva">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('uva')"><span class="slider"></span></label>
+      </div>
+    </div>
+  </div>
+
+  <button <button class="btn-pausar-tudo" onclick="pausarTudo()">⏸ Pausar tudo</button>
+<button class="btn-pausar-tudo" style="background:#27ae60;margin-top:8px" onclick="ativarTudo()">▶ Ativar tudo</button>
+
+  <script>
+    function toggle(id) {
+      const cb = document.querySelector(`[onchange="toggle('${id}')"]`);
+      const status = document.getElementById('s-' + id);
+      status.textContent = cb.checked ? 'Ativo' : 'Pausado';
+      status.className = 'status' + (cb.checked ? '' : ' pausado');
+    }
+
+    function pausarTudo() {
+      document.querySelectorAll('.toggle input').forEach(cb => {
+        cb.checked = false;
+        const id = cb.getAttribute('onchange').match(/'(\w+)'/)[1];
+        const status = document.getElementById('s-' + id);
+        status.textContent = 'Pausado';
+        status.className = 'status pausado';
+      });
+    }
+
+    function ativarTudo() {
+      document.querySelectorAll('.toggle input').forEach(cb => {
+        cb.checked = true;
+        const id = cb.getAttribute('onchange').match(/'(\w+)'/)[1];
+        const status = document.getElementById('s-' + id);
+        status.textContent = 'Ativo';
+        status.className = 'status';
+      });
+    }
+  </script>
+</body>
+</html>
