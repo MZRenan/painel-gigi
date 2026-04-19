@@ -7,113 +7,347 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: sans-serif; background: #fff0f5; min-height: 100vh; padding: 20px; }
-    h1 { color: #d63384; text-align: center; margin-bottom: 6px; }
-    p.sub { text-align: center; color: #888; margin-bottom: 24px; font-size: 14px; }
+    .header { background: #d63384; padding: 20px; text-align: center; border-radius: 0 0 20px 20px; margin: -20px -20px 24px; }
+    .header h1 { color: white; font-size: 22px; }
+    .header p { color: rgba(255,255,255,0.8); font-size: 13px; margin-top: 4px; }
+    .alerta { background: #fff3cd; border: 1px solid #ffc107; border-radius: 10px; padding: 12px 16px; margin-bottom: 16px; font-size: 13px; color: #856404; display: none; }
+    .alerta.visivel { display: block; }
     .card { background: white; border-radius: 12px; padding: 16px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-    .card h2 { font-size: 14px; color: #999; text-transform: uppercase; margin-bottom: 12px; }
+    .card h2 { font-size: 13px; color: #999; text-transform: uppercase; margin-bottom: 12px; letter-spacing: 0.05em; }
     .item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
     .item:last-child { border-bottom: none; }
+    .item-info { flex: 1; }
     .item-name { font-size: 15px; color: #333; }
-    .toggle { position: relative; width: 48px; height: 26px; }
+    .item-afeta { font-size: 11px; color: #aaa; margin-top: 2px; }
+    .item-afeta.critico { color: #e74c3c; }
+    .toggle-wrap { display: flex; align-items: center; gap: 8px; }
+    .toggle { position: relative; width: 48px; height: 26px; flex-shrink: 0; }
     .toggle input { opacity: 0; width: 0; height: 0; }
     .slider { position: absolute; inset: 0; background: #ddd; border-radius: 26px; cursor: pointer; transition: .3s; }
     .slider:before { content: ''; position: absolute; width: 20px; height: 20px; left: 3px; top: 3px; background: white; border-radius: 50%; transition: .3s; }
-    input:checked + .slider { background: #d63384; }
+    input:checked + .slider { background: #27ae60; }
     input:checked + .slider:before { transform: translateX(22px); }
-    .status { font-size: 12px; color: #999; margin-right: 8px; }
+    .status { font-size: 12px; color: #27ae60; font-weight: 500; min-width: 48px; text-align: right; }
     .status.pausado { color: #e74c3c; }
-    .btn-pausar-tudo { width: 100%; padding: 14px; background: #d63384; color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 8px; }
-    .btn-pausar-tudo:hover { background: #b02870; }
+    .btns { display: flex; gap: 10px; margin-top: 8px; }
+    .btn { flex: 1; padding: 14px; border: none; border-radius: 10px; font-size: 15px; font-weight: bold; cursor: pointer; }
+    .btn-pausar { background: #e74c3c; color: white; }
+    .btn-ativar { background: #27ae60; color: white; }
   </style>
 </head>
 <body>
-  <h1>🍬 Painel da Gigi</h1>
-  <p class="sub">Docinhos da Gigi — gerencie tudo em um lugar</p>
-
-  <div class="card">
-    <h2>Brigadeiros</h2>
-    <div class="item">
-      <span class="item-name">Brigadeiro de Oreo</span>
-      <div style="display:flex;align-items:center">
-        <span class="status" id="s-oreo">Ativo</span>
-        <label class="toggle"><input type="checkbox" checked onchange="toggle('oreo')"><span class="slider"></span></label>
-      </div>
-    </div>
-    <div class="item">
-      <span class="item-name">Brigadeiro de Ninho</span>
-      <div style="display:flex;align-items:center">
-        <span class="status" id="s-ninho">Ativo</span>
-        <label class="toggle"><input type="checkbox" checked onchange="toggle('ninho')"><span class="slider"></span></label>
-      </div>
-    </div>
-    <div class="item">
-      <span class="item-name">Brigadeiro de Kinder</span>
-      <div style="display:flex;align-items:center">
-        <span class="status" id="s-kinder">Ativo</span>
-        <label class="toggle"><input type="checkbox" checked onchange="toggle('kinder')"><span class="slider"></span></label>
-      </div>
-    </div>
-    <div class="item">
-      <span class="item-name">Brigadeiro de Maracujá</span>
-      <div style="display:flex;align-items:center">
-        <span class="status" id="s-maracuja">Ativo</span>
-        <label class="toggle"><input type="checkbox" checked onchange="toggle('maracuja')"><span class="slider"></span></label>
-      </div>
-    </div>
+  <div class="header">
+    <img src="logo.png" style="width:90px;height:90px;border-radius:50%;border:3px solid white;margin-bottom:8px;object-fit:cover;">
+    <h1>Painel da Gigi</h1>
+    <p>Docinhos da Gigi — gestão de ingredientes</p>
   </div>
 
-  <div class="card">
-    <h2>Complementos</h2>
-    <div class="item">
-      <span class="item-name">Pedaços de Brownie</span>
-      <div style="display:flex;align-items:center">
-        <span class="status" id="s-brownie">Ativo</span>
-        <label class="toggle"><input type="checkbox" checked onchange="toggle('brownie')"><span class="slider"></span></label>
-      </div>
-    </div>
-    <div class="item">
-      <span class="item-name">Biscoito Oreo</span>
-      <div style="display:flex;align-items:center">
-        <span class="status" id="s-biscoito">Ativo</span>
-        <label class="toggle"><input type="checkbox" checked onchange="toggle('biscoito')"><span class="slider"></span></label>
-      </div>
-    </div>
-    <div class="item">
-      <span class="item-name">Nutella</span>
-      <div style="display:flex;align-items:center">
-        <span class="status" id="s-nutella">Ativo</span>
-        <label class="toggle"><input type="checkbox" checked onchange="toggle('nutella')"><span class="slider"></span></label>
-      </div>
-    </div>
-  </div>
+  <div class="alerta" id="alerta"></div>
 
   <div class="card">
-    <h2>Frutas</h2>
+    <h2>🔴 Ingredientes críticos</h2>
+
     <div class="item">
-      <span class="item-name">Morango</span>
-      <div style="display:flex;align-items:center">
+      <div class="item-info">
+        <div class="item-name">Morango</div>
+        <div class="item-afeta critico">Pausa: Surpresa de Morango · Delícia de Nutella · Copão · Açaí</div>
+      </div>
+      <div class="toggle-wrap">
         <span class="status" id="s-morango">Ativo</span>
         <label class="toggle"><input type="checkbox" checked onchange="toggle('morango')"><span class="slider"></span></label>
       </div>
     </div>
+
     <div class="item">
-      <span class="item-name">Banana</span>
-      <div style="display:flex;align-items:center">
-        <span class="status" id="s-banana">Ativo</span>
-        <label class="toggle"><input type="checkbox" checked onchange="toggle('banana')"><span class="slider"></span></label>
+      <div class="item-info">
+        <div class="item-name">Brigadeiro de Ninho</div>
+        <div class="item-afeta critico">Pausa: Surpresa · Delícia de Nutella · Brownie · Copão</div>
+      </div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-ninho">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('ninho')"><span class="slider"></span></label>
       </div>
     </div>
+
     <div class="item">
-      <span class="item-name">Uva</span>
-      <div style="display:flex;align-items:center">
+      <div class="item-info">
+        <div class="item-name">Brigadeiro de Chocolate</div>
+        <div class="item-afeta critico">Pausa: Surpresa · Copão</div>
+      </div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-chocolate">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('chocolate')"><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-info">
+        <div class="item-name">Nutella</div>
+        <div class="item-afeta critico">Pausa: Delícia de Nutella · Copão · Açaí</div>
+      </div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-nutella">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('nutella')"><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-info">
+        <div class="item-name">Brownie</div>
+        <div class="item-afeta critico">Pausa: Delícia de Nutella · Copão</div>
+      </div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-brownie">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('brownie')"><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-info">
+        <div class="item-name">Uva</div>
+        <div class="item-afeta critico">Pausa: Surpresa de Uva · Copão · Açaí</div>
+      </div>
+      <div class="toggle-wrap">
         <span class="status" id="s-uva">Ativo</span>
         <label class="toggle"><input type="checkbox" checked onchange="toggle('uva')"><span class="slider"></span></label>
       </div>
     </div>
+
   </div>
 
-  <button <button class="btn-pausar-tudo" onclick="pausarTudo()">⏸ Pausar tudo</button>
-<button class="btn-pausar-tudo" style="background:#27ae60;margin-top:8px" onclick="ativarTudo()">▶ Ativar tudo</button>
+  <div class="card">
+    <h2>🟡 Complementos do Copão</h2>
+
+    <div class="item">
+      <div class="item-info"><div class="item-name">Brigadeiro de Oreo</div></div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-oreo">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('oreo')"><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-info"><div class="item-name">Brigadeiro de Kinder</div></div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-kinder">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('kinder')"><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-info"><div class="item-name">Brigadeiro de Maracujá</div></div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-maracuja">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('maracuja')"><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-info"><div class="item-name">Banana</div></div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-banana">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('banana')"><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-info"><div class="item-name">Biscoito Oreo</div></div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-biscoito">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('biscoito')"><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-info"><div class="item-name">Bis</div></div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-bis">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('bis')"><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-info"><div class="item-name">KitKat</div></div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-kitkat">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('kitkat')"><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-info"><div class="item-name">Creme de Ovomaltine</div></div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-ovomaltine">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('ovomaltine')"><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-info"><div class="item-name">Tubes de Morango</div></div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-tubes-morango">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('tubes-morango')"><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-info"><div class="item-name">Tubes de Avelã</div></div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-tubes-avela">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('tubes-avela')"><span class="slider"></span></label>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <h2>🧊 Geladinhos Gourmet</h2>
+
+    <div class="item">
+      <div class="item-info"><div class="item-name">Ninho com Nutella</div></div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-g-ninho-nutella">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('g-ninho-nutella')"><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-info"><div class="item-name">Ninho com Morango</div></div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-g-ninho-morango">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('g-ninho-morango')"><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-info"><div class="item-name">Ninho com Ovomaltine</div></div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-g-ninho-ovomaltine">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('g-ninho-ovomaltine')"><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-info"><div class="item-name">Ninho com Oreo</div></div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-g-ninho-oreo">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('g-ninho-oreo')"><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-info"><div class="item-name">Chocolate com Nutella</div></div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-g-choco-nutella">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('g-choco-nutella')"><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-info"><div class="item-name">Morango</div></div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-g-morango">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('g-morango')"><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-info"><div class="item-name">Morango com Nutella</div></div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-g-morango-nutella">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('g-morango-nutella')"><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-info"><div class="item-name">Maracujá</div></div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-g-maracuja">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('g-maracuja')"><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-info"><div class="item-name">Maracujá com Nutella</div></div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-g-maracuja-nutella">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('g-maracuja-nutella')"><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-info"><div class="item-name">Paçoca</div></div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-g-pacoca">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('g-pacoca')"><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-info"><div class="item-name">Limão</div></div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-g-limao">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('g-limao')"><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-info"><div class="item-name">Limão com Nutella</div></div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-g-limao-nutella">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('g-limao-nutella')"><span class="slider"></span></label>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-info"><div class="item-name">Chocolate Branco</div></div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-g-choco-branco">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('g-choco-branco')"><span class="slider"></span></label>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <h2>🍦 Caixas de Brigadeiro</h2>
+    <div class="item">
+      <div class="item-info"><div class="item-name">Brigadeirinho de Chocolate</div></div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-mini-chocolate">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('mini-chocolate')"><span class="slider"></span></label>
+      </div>
+    </div>
+    <div class="item">
+      <div class="item-info">
+        <div class="item-name">Brigadeirinho de Ninho</div>
+        <div class="item-afeta critico">Pausa: Delícia de Nutella · Fatia de Brownie</div>
+      </div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-mini-ninho">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('mini-ninho')"><span class="slider"></span></label>
+      </div>
+    </div>
+    <div class="item">
+      <div class="item-info"><div class="item-name">Brigadeirinho de Bicho de Pé</div></div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-mini-bichope">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('mini-bichope')"><span class="slider"></span></label>
+      </div>
+    </div>
+    <div class="item">
+      <div class="item-info"><div class="item-name">Brigadeirinho Confetti</div></div>
+      <div class="toggle-wrap">
+        <span class="status" id="s-mini-confetti">Ativo</span>
+        <label class="toggle"><input type="checkbox" checked onchange="toggle('mini-confetti')"><span class="slider"></span></label>
+      </div>
+    </div>
+  </div>
+
+  <div class="btns">
+    <button class="btn btn-pausar" onclick="pausarTudo()">⏸ Pausar tudo</button>
+    <button class="btn btn-ativar" onclick="ativarTudo()">▶ Ativar tudo</button>
+  </div>
 
   <script>
     function toggle(id) {
@@ -121,26 +355,44 @@
       const status = document.getElementById('s-' + id);
       status.textContent = cb.checked ? 'Ativo' : 'Pausado';
       status.className = 'status' + (cb.checked ? '' : ' pausado');
+      atualizarAlerta();
     }
 
     function pausarTudo() {
       document.querySelectorAll('.toggle input').forEach(cb => {
         cb.checked = false;
-        const id = cb.getAttribute('onchange').match(/'(\w+)'/)[1];
+        const id = cb.getAttribute('onchange').match(/'([^']+)'/)[1];
         const status = document.getElementById('s-' + id);
-        status.textContent = 'Pausado';
-        status.className = 'status pausado';
+        if (status) { status.textContent = 'Pausado'; status.className = 'status pausado'; }
       });
+      atualizarAlerta();
     }
 
     function ativarTudo() {
       document.querySelectorAll('.toggle input').forEach(cb => {
         cb.checked = true;
-        const id = cb.getAttribute('onchange').match(/'(\w+)'/)[1];
+        const id = cb.getAttribute('onchange').match(/'([^']+)'/)[1];
         const status = document.getElementById('s-' + id);
-        status.textContent = 'Ativo';
-        status.className = 'status';
+        if (status) { status.textContent = 'Ativo'; status.className = 'status'; }
       });
+      atualizarAlerta();
+    }
+
+    function atualizarAlerta() {
+      const pausados = [...document.querySelectorAll('.toggle input')]
+        .filter(cb => !cb.checked)
+        .map(cb => {
+          const id = cb.getAttribute('onchange').match(/'([^']+)'/)[1];
+          return document.querySelector(`[onchange="toggle('${id}')"]`)
+            ?.closest('.item')?.querySelector('.item-name')?.textContent;
+        }).filter(Boolean);
+      const alerta = document.getElementById('alerta');
+      if (pausados.length > 0) {
+        alerta.textContent = `⚠️ ${pausados.length} item(s) pausado(s): ${pausados.join(', ')}`;
+        alerta.classList.add('visivel');
+      } else {
+        alerta.classList.remove('visivel');
+      }
     }
   </script>
 </body>
