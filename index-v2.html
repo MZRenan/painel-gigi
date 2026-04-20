@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel da Gigi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #fdf6f9;
+      background-image: radial-gradient(#f5c6d8 1px, transparent 1px);
+      background-size: 24px 24px;
+      min-height: 100vh;
+      padding-bottom: 40px;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #d63384, #e91e8c);
+      padding: 28px 20px 24px;
+      text-align: center;
+      border-radius: 0 0 28px 28px;
+      box-shadow: 0 4px 20px rgba(214,51,132,0.3);
+      margin-bottom: 20px;
+    }
+
+    .header img {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      border: 3px solid white;
+      object-fit: cover;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .header h1 {
+      color: white;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+
+    .header p {
+      color: rgba(255,255,255,0.85);
+      font-size: 13px;
+      margin-top: 2px;
+    }
+
+    .loja-btn {
+      margin-top: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      border-radius: 99px;
+      border: 2px solid white;
+      background: transparent;
+      color: white;
+      font-family: 'Nunito', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .loja-btn.fechada {
+      background: white;
+      color: #d63384;
+    }
+
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #4ade80;
+      animation: pulse 2s infinite;
+    }
+
+    .dot.off { background: #f87171; animation: none; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .alerta {
+      margin: 0 16px 16px;
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 13px;
+      color: #856404;
+      display: none;
+    }
+
+    .alerta.visivel { display: block; }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      margin: 0 16px 14px;
+      box-shadow: 0 2px 12px rgba(214,51,132,0.08);
+      overflow: hidden;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .card-header-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card-header h2 {
+      font-size: 13px;
+      font-weight: 800;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .chevron {
+      font-size: 12px;
+      color: #aaa;
+      transition: transform 0.25s;
+    }
+
+    .chevron.fechado { transform: rotate(-90deg); }
+
+    .card-body { border-top: 1px solid #fdf0f5; }
+    .card-body.fechado { display: none; }
+
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      border-bottom: 1px solid #fdf0f5;
+      transition: background 0.15s;
+    }
+
+    .item:last-child { border-bottom: none; }
+    .item:hover { background: #fdf6f9; }
+
+    .item-info { flex: 1; }
+
+    .item-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .item-afeta {
+      font-size: 11px;
+      color: #d63384;
+      margin-top: 2px;
+      opacity: 0.8;
+    }
+
+    .item-hora {
+      font-size: 11px;
+      color: #bbb;
+      margin-top: 2px;
+    }
+
+    .toggle-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .status {
+      font-size: 12px;
+      font-weight: 700;
+      color: #27ae60;
+      min-width: 52px;
+      text-align: right;
+    }
+
+    .status.pausado { color: #e74c3c; }
+
+    .toggle { position: relative; width: 48px; height: 26px; }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+
+    .slider {
+      position: absolute;
+      inset: 0;
+      background: #ddd;
+      border-radius: 26px;
+      cursor: pointer;
+      transition: .25s;
+    }
+
+    .slider:before {
+      content: '';
+      position: absolute;
+      width: 20px; height: 20px;
+      left: 3px; top: 3px;
+      background: white;
+      border-radius: 50%;
+      transition: .25s;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    }
+
+    input:checked + .slider { background: #27ae60; }
+    input:checked + .slider:before { transform: translateX(22px); }
+
+    .btns {
+      display: flex;
+      gap: 10px;
+      margin: 6px 16px 0;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.1s, opacity 0.1s;
+    }
+
+    .btn:active { transform: scale(0.97); }
+    .btn-pausar { background: #e74c3c; color: white; }
+    .btn-ativar { background: #27ae60; color: white; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <img src="logo.png" alt="Docinhos da Gigi">
+    <h1>Painel da Gigi</h1>
+    <p>Docinhos da Gigi — gestão de ingredientes</p>
+    <button class="loja-btn" id="lojaBtn" onclick="toggleLoja()">
+      <span class="dot" id="lojaDot"></span>
+      <span id="lojaTexto">Loja Aberta</span>
+    </button>
+  </div>
+
+  <div class="alerta" id="alerta"></div>
+
+  <!-- BRIGADEIROS -->
+  <div class="card">
+    <div class="card-header" onclick="recolher('brigadeiros')">
+      <div class="card-header-left">
+        <span>🍫</span>
+        <h2>Brigadeiros</h2>
+      </div>
+      <span class="chevron" id="chev-brigadeiros">▾</span>
+    </div>
+    <div class="card-body" id="body-brigadeiros">
+      <div class="item">
+        <div class="item-info">
+          <div class="item-name">Brigadeiro de Ninho</div>
+          <div class="item-afeta">Afeta: Surpresa · Delícia de Nutella · Brownie · Copão</div>
+          <div class="item-hora" id="hora-ninho"></div>
+        </div>
+        <div class="toggle-wrap">
+          <span class="status" id="s-ninho">Ativo</span>
+          <label class="toggle"><input type="checkbox" checked onchange="toggle('ninho')"><span class="slider"></span></label>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-info">
+          <div class="item-name">Brigadeiro de Chocolate</div>
+          <div class="item-afeta">Afeta: Surpresa · Copão</div>
+          <div class="item-hora" id="hora-chocolate"></div>
+        </div>
+        <div class="toggle-wrap">
+          <span class="status" id="s-chocolate">Ativo</span>
+          <label class="toggle"><input type="checkbox" checked onchange="toggle('chocolate')"><span class="slider"></span></label>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-info">
+          <div class="item-name">Brigadeiro de Oreo</div>
+          <div class="item-hora" id="hora-oreo"></div>
+        </div>
+        <div class="toggle-wrap">
+          <span class="status" id="s-oreo">Ativo</span>
+          <label class="toggle"><input type="checkbox" checked onchange="toggle('oreo')"><span class="slider"></span></label>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-info">
+          <div class="item-name">Brigadeiro de Kinder</div>
+          <div class="item-hora" id="hora-kinder"></div>
+        </div>
+        <div class="toggle-wrap">
+          <span class="status" id="s-kinder">Ativo</span>
+          <label class="toggle"><input type="checkbox" checked onchange="toggle('kinder')"><span class="slider"></span></label>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-info">
+          <div class="item-name">Brigadeiro de Maracujá</div>
+          <div class="item-hora" id="hora-maracuja"></div>
+        </div>
+        <div class="toggle-wrap">
+          <span class="status" id="s-maracuja">Ativo</span>
+          <label class="toggle"><input type="checkbox" checked onchange="toggle('maracuja')"><span class="slider"></span></label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FRUTAS -->
+  <div class="card">
+    <div class="card-header" onclick="recolher('frutas')">
+      <div class="card-header-left"><span>🍓</span><h2>Frutas</h2></div>
+      <span class="chevron" id="chev-frutas">▾</span>
+    </div>
+    <div class="card-body" id="body-frutas">
+      <div class="item">
+        <div class="item-info">
+          <div class="item-name">Morango</div>
+          <div class="item-afeta">Afeta: Surpresa de Morango · Delícia de Nutella · Copão · Açaí</div>
+          <div class="item-hora" id="hora-morango"></div>
+        </div>
+        <div class="toggle-wrap">
+          <span class="status" id="s-morango">Ativo</span>
+          <label class="toggle"><input type="checkbox" checked onchange="toggle('morango')"><span class="slider"></span></label>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-info">
+          <div class="item-name">Uva</div>
+          <div class="item-afeta">Afeta: Surpresa de Uva · Copão · Açaí</div>
+          <div class="item-hora" id="hora-uva"></div>
+        </div>
+        <div class="toggle-wrap">
+          <span class="status" id="s-uva">Ativo</span>
+          <label class="toggle"><input type="checkbox" checked onchange="toggle('uva')"><span class="slider"></span></label>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-info">
+          <div class="item-name">Banana</div>
+          <div class="item-afeta">Afeta: Copão · Açaí</div>
+          <div class="item-hora" id="hora-banana"></div>
+        </div>
+        <div class="toggle-wrap">
+          <span class="status" id="s-banana">Ativo</span>
+          <label class="toggle"><input type="checkbox" checked onchange="toggle('banana')"><span class="slider"></span></label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPLEMENTOS -->
+  <div class="card">
+    <div class="card-header" onclick="recolher('complementos')">
+      <div class="card-header-left"><span>🍪</span><h2>Complementos</h2></div>
+      <span class="chevron" id="chev-complementos">▾</span>
+    </div>
+    <div class="card-body" id="body-complementos">
+      <div class="item">
+        <div class="item-info">
+          <div class="item-name">Brownie</div>
+          <div class="item-afeta">Afeta: Delícia de Nutella · Copão</div>
+          <div class="item-hora" id="hora-brownie"></div>
+        </div>
+        <div class="toggle-wrap">
+          <span class="status" id="s-brownie">Ativo</span>
+          <label class="toggle"><input type="checkbox" checked onchange="toggle('brownie')"><span class="slider"></span></label>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-info">
+          <div class="item-name">Nutella</div>
+          <div class="item-afeta">Afeta: Delícia de Nutella · Copão · Açaí</div>
+          <div class="item-hora" id="hora-nutella"></div>
+        </div>
+        <div class="toggle-wrap">
+          <span class="status" id="s-nutella">Ativo</span>
+          <label class="toggle"><input type="checkbox" checked onchange="toggle('nutella')"><span class="slider"></span></label>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-info">
+          <div class="item-name">Biscoito Oreo</div>
+          <div class="item-hora" id="hora-biscoito"></div>
+        </div>
+        <div class="toggle-wrap">
+          <span class="status" id="s-biscoito">Ativo</span>
+          <label class="toggle"><input type="checkbox" checked onchange="toggle('biscoito')"><span class="slider"></span></label>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-info">
+          <div class="item-name">Bis</div>
+          <div class="item-hora" id="hora-bis"></div>
+        </div>
+        <div class="toggle-wrap">
+          <span class="status" id="s-bis">Ativo</span>
+          <label class="toggle"><input type="checkbox" checked onchange="toggle('bis')"><span class="slider"></span></label>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-info">
+          <div class="item-name">KitKat</div>
+          <div class="item-hora" id="hora-kitkat"></div>
+        </div>
+        <div class="toggle-wrap">
+          <span class="status" id="s-kitkat">Ativo</span>
+          <label class="toggle"><input type="checkbox" checked onchange="toggle('kitkat')"><span class="slider"></span></label>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-info">
+          <div class="item-name">Creme de Ovomaltine</div>
+          <div class="item-hora" id="hora-ovomaltine"></div>
+        </div>
+        <div class="toggle-wrap">
+          <span class="status" id="s-ovomaltine">Ativo</span>
+          <label class="toggle"><input type="checkbox" checked onchange="toggle('ovomaltine')"><span class="slider"></span></label>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-info">
+          <div class="item-name">Tubes de Morango</div>
+          <div class="item-hora" id="hora-tubes-morango"></div>
+        </div>
+        <div class="toggle-wrap">
+          <span class="status" id="s-tubes-morango">Ativo</span>
+          <label class="toggle"><input type="checkbox" checked onchange="toggle('tubes-morango')"><span class="slider"></span></label>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-info">
+          <div class="item-name">Tubes de Avelã</div>
+          <div class="item-hora" id="hora-tubes-avela"></div>
+        </div>
+        <div class="toggle-wrap">
+          <span class="status" id="s-tubes-avela">Ativo</span>
+          <label class="toggle"><input type="checkbox" checked onchange="toggle('tubes-avela')"><span class="slider"></span></label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AÇAÍ -->
+  <div class="card">
+    <div class="card-header" onclick="recolher('acai')">
+      <div class="card-header-left"><span>🫐</span><h2>Açaí</h2></div>
+      <span class="chevron" id="chev-acai">▾</span>
+    </div>
+    <div class="card-body" id="body-acai">
+      <div class="item">
+        <div class="item-info"><div class="item-name">Paçoca</div><div class="item-hora" id="hora-pacoca"></div></div>
+        <div class="toggle-wrap">
+          <span class="status" id="s-pacoca">Ativo</span>
+          <label class="toggle"><input type="checkbox" checked onchange="toggle('pacoca')"><span class="slider"></span></label>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-info"><div class="item-name">Leite Condensado</div><div class="item-hora" id="hora-leite-cond"></div></div>
+        <div class="toggle-wrap">
+          <span class="status" id="s-leite-cond">Ativo</span>
+          <label class="toggle"><input type="checkbox" checked onchange="toggle('leite-cond')"><span class="slider"></span></label>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-info"><div class="item-name">Leite em Pó</div><div class="item-hora" id="hora-leite-po"></div></div>
+        <div class="toggle-wrap">
+          <span class="status" id="s-leite-po">Ativo</span>
+          <label class="toggle"><input type="checkbox" checked onchange="toggle('leite-po')"><span class="slider"></span></label>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-info"><div class="item-name">Confetti</div><div class="item-hora" id="hora-confetti"></div></div>
+        <div class="toggle-wrap">
+          <span class="status" id="s-confetti">Ativo</span>
+          <label class="toggle"><input type="checkbox" checked onchange="toggle('confetti')"><span class="slider"></span></label>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-info"><div class="item-name">Sucrilhos</div><div class="item-hora" id="hora-sucrilhos"></div></div>
+        <div class="toggle-wrap">
+          <span class="status" id="s-sucrilhos">Ativo</span>
+          <label class="toggle"><input type="checkbox" checked onchange="toggle('sucrilhos')"><span class="slider"></span></label>
+        </div>
+      </div>
+      <div class="item">
+        <div class="item-info"><div class="item-name">Granola</div><div class="item-hora" id="hora-granola"></div></div>
+        <div class="toggle-wrap">
+          <span class="status" id="s-granola">Ativo</span>
+          <label class="toggle"><input type="checkbox" checked onchange="toggle('granola')"><span class="slider"></span></label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GELADINHOS -->
+  <div class="card">
+    <div class="card-header" onclick="recolher('geladinhos')">
+      <div class="card-header-left"><span>🧊</span><h2>Geladinhos Gourmet</h2></div>
+      <span class="chevron" id="chev-geladinhos">▾</span>
+    </div>
+    <div class="card-body" id="body-geladinhos">
+      <div class="item">
+        <div class="item-info"><div class="item-name">Ninho com Nutella</div><div class="item-hora" id="hora-g-ninho-nutella"></div></div>
+        <div class="toggle-wrap"><span class="status" id="s-g-ninho-nutella">Ativo</span><label class="toggle"><input type="checkbox" checked onchange="toggle('g-ninho-nutella')"><span class="slider"></span></label></div>
+      </div>
+      <div class="item">
+        <div class="item-info"><div class="item-name">Ninho com Morango</div><div class="item-hora" id="hora-g-ninho-morango"></div></div>
+        <div class="toggle-wrap"><span class="status" id="s-g-ninho-morango">Ativo</span><label class="toggle"><input type="checkbox" checked onchange="toggle('g-ninho-morango')"><span class="slider"></span></label></div>
+      </div>
+      <div class="item">
+        <div class="item-info"><div class="item-name">Ninho com Ovomaltine</div><div class="item-hora" id="hora-g-ninho-ovomaltine"></div></div>
+        <div class="toggle-wrap"><span class="status" id="s-g-ninho-ovomaltine">Ativo</span><label class="toggle"><input type="checkbox" checked onchange="toggle('g-ninho-ovomaltine')"><span class="slider"></span></label></div>
+      </div>
+      <div class="item">
+        <div class="item-info"><div class="item-name">Ninho com Oreo</div><div class="item-hora" id="hora-g-ninho-oreo"></div></div>
+        <div class="toggle-wrap"><span class="status" id="s-g-ninho-oreo">Ativo</span><label class="toggle"><input type="checkbox" checked onchange="toggle('g-ninho-oreo')"><span class="slider"></span></label></div>
+      </div>
+      <div class="item">
+        <div class="item-info"><div class="item-name">Chocolate com Nutella</div><div class="item-hora" id="hora-g-choco-nutella"></div></div>
+        <div class="toggle-wrap"><span class="status" id="s-g-choco-nutella">Ativo</span><label class="toggle"><input type="checkbox" checked onchange="toggle('g-choco-nutella')"><span class="slider"></span></label></div>
+      </div>
+      <div class="item">
+        <div class="item-info"><div class="item-name">Morango</div><div class="item-hora" id="hora-g-morango"></div></div>
+        <div class="toggle-wrap"><span class="status" id="s-g-morango">Ativo</span><label class="toggle"><input type="checkbox" checked onchange="toggle('g-morango')"><span class="slider"></span></label></div>
+      </div>
+      <div class="item">
+        <div class="item-info"><div class="item-name">Morango com Nutella</div><div class="item-hora" id="hora-g-morango-nutella"></div></div>
+        <div class="toggle-wrap"><span class="status" id="s-g-morango-nutella">Ativo</span><label class="toggle"><input type="checkbox" checked onchange="toggle('g-morango-nutella')"><span class="slider"></span></label></div>
+      </div>
+      <div class="item">
+        <div class="item-info"><div class="item-name">Maracujá</div><div class="item-hora" id="hora-g-maracuja"></div></div>
+        <div class="toggle-wrap"><span class="status" id="s-g-maracuja">Ativo</span><label class="toggle"><input type="checkbox" checked onchange="toggle('g-maracuja')"><span class="slider"></span></label></div>
+      </div>
+      <div class="item">
+        <div class="item-info"><div class="item-name">Maracujá com Nutella</div><div class="item-hora" id="hora-g-maracuja-nutella"></div></div>
+        <div class="toggle-wrap"><span class="status" id="s-g-maracuja-nutella">Ativo</span><label class="toggle"><input type="checkbox" checked onchange="toggle('g-maracuja-nutella')"><span class="slider"></span></label></div>
+      </div>
+      <div class="item">
+        <div class="item-info"><div class="item-name">Paçoca</div><div class="item-hora" id="hora-g-pacoca"></div></div>
+        <div class="toggle-wrap"><span class="status" id="s-g-pacoca">Ativo</span><label class="toggle"><input type="checkbox" checked onchange="toggle('g-pacoca')"><span class="slider"></span></label></div>
+      </div>
+      <div class="item">
+        <div class="item-info"><div class="item-name">Limão</div><div class="item-hora" id="hora-g-limao"></div></div>
+        <div class="toggle-wrap"><span class="status" id="s-g-limao">Ativo</span><label class="toggle"><input type="checkbox" checked onchange="toggle('g-limao')"><span class="slider"></span></label></div>
+      </div>
+      <div class="item">
+        <div class="item-info"><div class="item-name">Limão com Nutella</div><div class="item-hora" id="hora-g-limao-nutella"></div></div>
+        <div class="toggle-wrap"><span class="status" id="s-g-limao-nutella">Ativo</span><label class="toggle"><input type="checkbox" checked onchange="toggle('g-limao-nutella')"><span class="slider"></span></label></div>
+      </div>
+      <div class="item">
+        <div class="item-info"><div class="item-name">Chocolate Branco</div><div class="item-hora" id="hora-g-choco-branco"></div></div>
+        <div class="toggle-wrap"><span class="status" id="s-g-choco-branco">Ativo</span><label class="toggle"><input type="checkbox" checked onchange="toggle('g-choco-branco')"><span class="slider"></span></label></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAIXAS DE BRIGADEIRO -->
+  <div class="card">
+    <div class="card-header" onclick="recolher('caixas')">
+      <div class="card-header-left"><span>🎁</span><h2>Caixas de Brigadeiro</h2></div>
+      <span class="chevron" id="chev-caixas">▾</span>
+    </div>
+    <div class="card-body" id="body-caixas">
+      <div class="item">
+        <div class="item-info"><div class="item-name">Brigadeirinho de Ninho</div><div class="item-afeta">Afeta: Delícia de Nutella · Fatia de Brownie</div><div class="item-hora" id="hora-mini-ninho"></div></div>
+        <div class="toggle-wrap"><span class="status" id="s-mini-ninho">Ativo</span><label class="toggle"><input type="checkbox" checked onchange="toggle('mini-ninho')"><span class="slider"></span></label></div>
+      </div>
+      <div class="item">
+        <div class="item-info"><div class="item-name">Brigadeirinho de Chocolate</div><div class="item-hora" id="hora-mini-chocolate"></div></div>
+        <div class="toggle-wrap"><span class="status" id="s-mini-chocolate">Ativo</span><label class="toggle"><input type="checkbox" checked onchange="toggle('mini-chocolate')"><span class="slider"></span></label></div>
+      </div>
+      <div class="item">
+        <div class="item-info"><div class="item-name">Brigadeirinho de Bicho de Pé</div><div class="item-hora" id="hora-mini-bichope"></div></div>
+        <div class="toggle-wrap"><span class="status" id="s-mini-bichope">Ativo</span><label class="toggle"><input type="checkbox" checked onchange="toggle('mini-bichope')"><span class="slider"></span></label></div>
+      </div>
+      <div class="item">
+        <div class="item-info"><div class="item-name">Brigadeirinho Confetti</div><div class="item-hora" id="hora-mini-confetti"></div></div>
+        <div class="toggle-wrap"><span class="status" id="s-mini-confetti">Ativo</span><label class="toggle"><input type="checkbox" checked onchange="toggle('mini-confetti')"><span class="slider"></span></label></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="btns">
+    <button class="btn btn-pausar" onclick="pausarTudo()">⏸ Pausar tudo</button>
+    <button class="btn btn-ativar" onclick="ativarTudo()">▶ Ativar tudo</button>
+  </div>
+
+  <script>
+    function toggle(id) {
+      const cb = document.querySelector(`[onchange="toggle('${id}')"]`);
+      const status = document.getElementById('s-' + id);
+      const hora = document.getElementById('hora-' + id);
+      const ativo = cb.checked;
+      status.textContent = ativo ? 'Ativo' : 'Pausado';
+      status.className = 'status' + (ativo ? '' : ' pausado');
+      if (!ativo) {
+        const agora = new Date();
+        hora.textContent = `Pausado às ${agora.getHours().toString().padStart(2,'0')}:${agora.getMinutes().toString().padStart(2,'0')}`;
+      } else {
+        hora.textContent = '';
+      }
+      atualizarAlerta();
+    }
+
+    function pausarTudo() {
+      document.querySelectorAll('.toggle input').forEach(cb => {
+        cb.checked = false;
+        const id = cb.getAttribute('onchange').match(/'([^']+)'/)[1];
+        const status = document.getElementById('s-' + id);
+        const hora = document.getElementById('hora-' + id);
+        if (status) { status.textContent = 'Pausado'; status.className = 'status pausado'; }
+        if (hora) {
+          const agora = new Date();
+          hora.textContent = `Pausado às ${agora.getHours().toString().padStart(2,'0')}:${agora.getMinutes().toString().padStart(2,'0')}`;
+        }
+      });
+      atualizarAlerta();
+    }
+
+    function ativarTudo() {
+      document.querySelectorAll('.toggle input').forEach(cb => {
+        cb.checked = true;
+        const id = cb.getAttribute('onchange').match(/'([^']+)'/)[1];
+        const status = document.getElementById('s-' + id);
+        const hora = document.getElementById('hora-' + id);
+        if (status) { status.textContent = 'Ativo'; status.className = 'status'; }
+        if (hora) hora.textContent = '';
+      });
+      atualizarAlerta();
+    }
+
+    function recolher(id) {
+      const body = document.getElementById('body-' + id);
+      const chev = document.getElementById('chev-' + id);
+      body.classList.toggle('fechado');
+      chev.classList.toggle('fechado');
+    }
+
+    function atualizarAlerta() {
+      const pausados = [...document.querySelectorAll('.toggle input')]
+        .filter(cb => !cb.checked)
+        .map(cb => {
+          const id = cb.getAttribute('onchange').match(/'([^']+)'/)[1];
+          return cb.closest('.item')?.querySelector('.item-name')?.textContent;
+        }).filter(Boolean);
+      const alerta = document.getElementById('alerta');
+      if (pausados.length > 0) {
+        alerta.innerHTML = `⚠️ <strong>${pausados.length} pausado(s):</strong> ${pausados.join(', ')}`;
+        alerta.classList.add('visivel');
+      } else {
+        alerta.classList.remove('visivel');
+      }
+    }
+
+    let lojaAberta = true;
+    function toggleLoja() {
+      lojaAberta = !lojaAberta;
+      const btn = document.getElementById('lojaBtn');
+      const dot = document.getElementById('lojaDot');
+      const txt = document.getElementById('lojaTexto');
+      txt.textContent = lojaAberta ? 'Loja Aberta' : 'Loja Fechada';
+      dot.className = 'dot' + (lojaAberta ? '' : ' off');
+      btn.className = 'loja-btn' + (lojaAberta ? '' : ' fechada');
+    }
+  </script>
+</body>
+</html>
