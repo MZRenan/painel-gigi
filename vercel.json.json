@@ -1,8 +1,0 @@
-{
-  "rewrites": [
-    {
-      "source": "/api/ifood/:path*",
-      "destination": "/api/ifood"
-    }
-  ]
-}
