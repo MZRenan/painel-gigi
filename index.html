@@ -10,7 +10,6 @@
       --pink: #e8317a;
       --pink-light: #fce8f1;
       --pink-dark: #b8225e;
-      --brown: #7a4a2a;
       --dark: #1a0f0a;
       --gray: #6b6b6b;
       --border: #ebebeb;
@@ -22,430 +21,99 @@
       --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.05);
       --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
     }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); min-height: 100vh; color: var(--dark); }
 
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      min-height: 100vh;
-      color: var(--dark);
-    }
-
-    /* ========== HEADER ========== */
-    .header {
-      background: var(--dark);
-      padding: 0 20px;
-      position: sticky;
-      top: 0;
-      z-index: 200;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.3);
-    }
-
-    .header-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 0 12px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-
+    .header { background: var(--dark); padding: 0 20px; position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 12px rgba(0,0,0,0.3); }
+    .header-top { display: flex; align-items: center; justify-content: space-between; padding: 14px 0 12px; border-bottom: 1px solid rgba(255,255,255,0.08); }
     .brand { display: flex; align-items: center; gap: 12px; }
+    .brand img { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.15); }
+    .brand-text h1 { font-family: 'DM Serif Display', serif; font-size: 17px; color: #fff; line-height: 1; }
+    .brand-text p { font-size: 10px; color: rgba(255,255,255,0.35); margin-top: 2px; letter-spacing: 0.04em; text-transform: uppercase; }
 
-    .brand img {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid rgba(255,255,255,0.15);
-    }
+    .merchant-pill { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 6px 12px; }
+    .merchant-pill select { background: transparent; border: none; color: #fff; font-size: 12px; font-family: 'DM Sans', sans-serif; cursor: pointer; outline: none; max-width: 160px; }
+    .merchant-pill select option { background: #222; }
 
-    .brand-text h1 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 17px;
-      color: #fff;
-      line-height: 1;
-    }
-
-    .brand-text p {
-      font-size: 10px;
-      color: rgba(255,255,255,0.35);
-      margin-top: 2px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    .merchant-selector {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 8px;
-      padding: 6px 12px;
-      cursor: pointer;
-    }
-
-    .merchant-selector select {
-      background: transparent;
-      border: none;
-      color: #fff;
-      font-size: 12px;
-      font-family: 'DM Sans', sans-serif;
-      cursor: pointer;
-      outline: none;
-      max-width: 140px;
-    }
-
-    .merchant-selector select option { background: #222; }
-
-    /* ========== TABS ========== */
-    .tabs {
-      display: flex;
-      gap: 0;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
+    .tabs { display: flex; overflow-x: auto; scrollbar-width: none; }
     .tabs::-webkit-scrollbar { display: none; }
+    .tab { flex-shrink: 0; padding: 10px 16px; font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.45); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; }
+    .tab.active { color: var(--pink); border-bottom-color: var(--pink); }
 
-    .tab {
-      flex-shrink: 0;
-      padding: 10px 16px;
-      font-size: 12px;
-      font-weight: 500;
-      color: rgba(255,255,255,0.45);
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      transition: all 0.2s;
-      white-space: nowrap;
-    }
-
-    .tab.active {
-      color: var(--pink);
-      border-bottom-color: var(--pink);
-    }
-
-    /* ========== MAIN ========== */
     .main { padding: 16px; max-width: 680px; margin: 0 auto; }
 
-    /* ========== TOAST ========== */
-    #toast-container {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 9999;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .toast {
-      background: var(--dark);
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 99px;
-      font-size: 13px;
-      font-weight: 500;
-      box-shadow: var(--shadow-lg);
-      animation: toastIn 0.3s ease;
-      white-space: nowrap;
-    }
-
+    #toast-container { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 8px; align-items: center; }
+    .toast { background: var(--dark); color: #fff; padding: 10px 20px; border-radius: 99px; font-size: 13px; font-weight: 500; box-shadow: var(--shadow-lg); animation: toastIn 0.3s ease; white-space: nowrap; }
     .toast.success { background: var(--green); }
     .toast.error { background: var(--red); }
     .toast.warning { background: var(--yellow); }
+    @keyframes toastIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    @keyframes toastIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ========== CARDS ========== */
-    .card {
-      background: var(--white);
-      border-radius: 16px;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      margin-bottom: 16px;
-    }
-
-    .card-header {
-      padding: 16px 20px 14px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .card-icon {
-      width: 34px;
-      height: 34px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      background: var(--pink-light);
-      flex-shrink: 0;
-    }
-
+    .card { background: var(--white); border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; margin-bottom: 16px; }
+    .card-header { padding: 16px 20px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+    .card-icon { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; background: var(--pink-light); flex-shrink: 0; }
     .card-title { font-size: 15px; font-weight: 700; }
     .card-subtitle { font-size: 11px; color: var(--gray); margin-top: 1px; }
     .card-body { padding: 16px 20px; }
 
-    /* ========== FORM ========== */
     .form-row { margin-bottom: 14px; }
     .form-row:last-child { margin-bottom: 0; }
-
-    label {
-      display: block;
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--gray);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 6px;
-    }
-
-    input[type=text], input[type=number], input[type=file], textarea, select {
-      width: 100%;
-      padding: 10px 14px;
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      font-size: 14px;
-      font-family: 'DM Sans', sans-serif;
-      background: #fafafa;
-      color: var(--dark);
-      transition: border-color 0.2s;
-      outline: none;
-    }
-
+    label { display: block; font-size: 11px; font-weight: 700; color: var(--gray); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+    input[type=text], input[type=number], input[type=file], textarea, select { width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 14px; font-family: 'DM Sans', sans-serif; background: #fafafa; color: var(--dark); transition: border-color 0.2s; outline: none; }
     input:focus, textarea:focus, select:focus { border-color: var(--pink); background: #fff; }
-
     textarea { resize: vertical; min-height: 80px; }
-
     .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
 
-    /* ========== BUTTONS ========== */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      padding: 10px 20px;
-      border-radius: 10px;
-      font-size: 13px;
-      font-weight: 700;
-      font-family: 'DM Sans', sans-serif;
-      cursor: pointer;
-      border: none;
-      transition: all 0.18s;
-      text-decoration: none;
-    }
-
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 20px; border-radius: 10px; font-size: 13px; font-weight: 700; font-family: 'DM Sans', sans-serif; cursor: pointer; border: none; transition: all 0.18s; }
     .btn:active { transform: scale(0.97); }
-
     .btn-primary { background: var(--pink); color: #fff; }
     .btn-primary:hover { background: var(--pink-dark); }
-
     .btn-secondary { background: var(--pink-light); color: var(--pink-dark); }
-    .btn-secondary:hover { background: #f8d0e5; }
-
-    .btn-outline {
-      background: transparent;
-      border: 1.5px solid var(--border);
-      color: var(--dark);
-    }
-    .btn-outline:hover { border-color: var(--pink); color: var(--pink); }
-
     .btn-sm { padding: 6px 12px; font-size: 11px; border-radius: 7px; }
     .btn-full { width: 100%; }
-
     .btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-    /* ========== LOADING ========== */
-    .spinner {
-      width: 16px;
-      height: 16px;
-      border: 2px solid rgba(255,255,255,0.3);
-      border-top-color: #fff;
-      border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-    }
-
+    .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ========== LISTS ========== */
-    .list-empty {
-      text-align: center;
-      padding: 32px 16px;
-      color: var(--gray);
-      font-size: 13px;
-    }
-
+    .list-empty { text-align: center; padding: 32px 16px; color: var(--gray); font-size: 13px; }
     .list-empty .icon { font-size: 32px; margin-bottom: 8px; }
 
-    .item-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--border);
-    }
+    .item-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border); }
     .item-row:last-child { border-bottom: none; }
-
     .item-row-info { flex: 1; min-width: 0; }
     .item-row-name { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .item-row-sub { font-size: 11px; color: var(--gray); margin-top: 2px; }
 
-    .item-row-actions { display: flex; gap: 6px; flex-shrink: 0; margin-left: 12px; }
-
-    /* ========== STATUS BADGE ========== */
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 3px 9px;
-      border-radius: 99px;
-      font-size: 11px;
-      font-weight: 600;
-    }
-
+    .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 99px; font-size: 11px; font-weight: 600; }
     .badge-green { background: #dcfce7; color: var(--green); }
     .badge-red { background: #fee2e2; color: var(--red); }
     .badge-gray { background: #f3f4f6; color: var(--gray); }
 
-    /* ========== DIVIDER ========== */
-    .divider { height: 1px; background: var(--border); margin: 16px 0; }
-
-    /* ========== PAGE SECTIONS ========== */
     .page { display: none; }
     .page.active { display: block; }
 
-    /* ========== CARDÁPIO / EVIDENCE ========== */
-    .menu-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 16px;
-    }
-
-    .menu-card {
-      background: var(--white);
-      border-radius: 16px;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-
-    .menu-card-img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-      background: var(--pink-light);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 48px;
-    }
-
-    .menu-card-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+    .menu-card { background: var(--white); border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; }
+    .menu-card-img { width: 100%; height: 160px; background: var(--pink-light); display: flex; align-items: center; justify-content: center; font-size: 48px; }
+    .menu-card-img img { width: 100%; height: 100%; object-fit: cover; }
     .menu-card-body { padding: 14px; }
     .menu-card-name { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
     .menu-card-desc { font-size: 12px; color: var(--gray); line-height: 1.5; margin-bottom: 10px; }
     .menu-card-price { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--pink); }
 
-    /* ========== SECTION TAG ========== */
-    .section-tag {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--gray);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 12px;
-      margin-top: 4px;
-    }
-
-    /* ========== TOGGLE ========== */
-    .toggle-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .toggle-row:last-child { border-bottom: none; }
-
-    .toggle-switch {
-      position: relative;
-      width: 44px;
-      height: 24px;
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-
-    .toggle-switch input { opacity: 0; width: 0; height: 0; }
-
-    .toggle-slider {
-      position: absolute;
-      inset: 0;
-      background: #e0e0e0;
-      border-radius: 99px;
-      transition: 0.2s;
-    }
-
-    .toggle-slider:before {
-      content: '';
-      position: absolute;
-      width: 18px;
-      height: 18px;
-      left: 3px;
-      top: 3px;
-      background: #fff;
-      border-radius: 50%;
-      transition: 0.2s;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-    }
-
-    .toggle-switch input:checked + .toggle-slider { background: var(--green); }
-    .toggle-switch input:checked + .toggle-slider:before { transform: translateX(20px); }
-
-    /* ========== IMAGE UPLOAD ========== */
-    .upload-zone {
-      border: 2px dashed var(--border);
-      border-radius: 12px;
-      padding: 24px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s;
-      background: #fafafa;
-    }
-
+    .upload-zone { border: 2px dashed var(--border); border-radius: 12px; padding: 24px; text-align: center; cursor: pointer; transition: all 0.2s; background: #fafafa; }
     .upload-zone:hover { border-color: var(--pink); background: var(--pink-light); }
-    .upload-zone.drag-over { border-color: var(--pink); background: var(--pink-light); }
-
     .upload-zone p { font-size: 13px; color: var(--gray); margin-top: 6px; }
+    .upload-preview { width: 100%; max-height: 200px; object-fit: contain; border-radius: 10px; margin-top: 10px; display: none; }
 
-    .upload-preview {
-      width: 100%;
-      max-height: 200px;
-      object-fit: contain;
-      border-radius: 10px;
-      margin-top: 10px;
-      display: none;
-    }
+    /* Banner de alerta */
+    .alert-banner { background: #fff8ed; border: 1px solid #fcd34d; border-radius: 12px; padding: 14px 16px; font-size: 13px; color: #92400e; margin-bottom: 16px; line-height: 1.6; }
+    .alert-banner strong { display: block; margin-bottom: 4px; font-size: 14px; }
   </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="header">
   <div class="header-top">
     <div class="brand">
@@ -455,7 +123,7 @@
         <p>iFood Manager</p>
       </div>
     </div>
-    <div class="merchant-selector">
+    <div class="merchant-pill">
       <span style="font-size:14px;">🏪</span>
       <select id="merchantSelect" onchange="onMerchantChange()">
         <option value="">Carregando...</option>
@@ -463,12 +131,12 @@
     </div>
   </div>
   <div class="tabs">
-    <div class="tab active" onclick="showPage('catalogs')">📋 Catálogos</div>
-    <div class="tab" onclick="showPage('categories')">🗂️ Categorias</div>
-    <div class="tab" onclick="showPage('items')">🍬 Itens</div>
-    <div class="tab" onclick="showPage('options')">➕ Complementos</div>
-    <div class="tab" onclick="showPage('images')">📷 Imagens</div>
-    <div class="tab" onclick="showPage('menu')">🍽️ Cardápio</div>
+    <div class="tab active" onclick="showPage('catalogs', this)">📋 Catálogos</div>
+    <div class="tab" onclick="showPage('categories', this)">🗂️ Categorias</div>
+    <div class="tab" onclick="showPage('items', this)">🍬 Itens</div>
+    <div class="tab" onclick="showPage('options', this)">➕ Complementos</div>
+    <div class="tab" onclick="showPage('images', this)">📷 Imagens</div>
+    <div class="tab" onclick="showPage('menu', this)">🍽️ Cardápio</div>
   </div>
 </header>
 
@@ -476,9 +144,7 @@
 
 <main class="main">
 
-  <!-- ============================================================ -->
-  <!-- PAGE: CATÁLOGOS -->
-  <!-- ============================================================ -->
+  <!-- CATÁLOGOS -->
   <div id="page-catalogs" class="page active">
     <div class="card">
       <div class="card-header">
@@ -490,19 +156,13 @@
         <button class="btn btn-secondary btn-sm" style="margin-left:auto" onclick="loadCatalogs()">↻ Atualizar</button>
       </div>
       <div class="card-body">
-        <div id="catalogs-list">
-          <div class="list-empty"><div class="icon">📋</div>Selecione um merchant e clique em Atualizar</div>
-        </div>
+        <div id="catalogs-list"><div class="list-empty"><div class="icon">⏳</div>Aguardando autenticação...</div></div>
       </div>
     </div>
   </div>
 
-  <!-- ============================================================ -->
-  <!-- PAGE: CATEGORIAS -->
-  <!-- ============================================================ -->
+  <!-- CATEGORIAS -->
   <div id="page-categories" class="page">
-
-    <!-- Listar categorias -->
     <div class="card">
       <div class="card-header">
         <div class="card-icon">🗂️</div>
@@ -514,16 +174,12 @@
       <div class="card-body">
         <div class="form-row">
           <label>Catálogo</label>
-          <select id="cat-catalogId">
-            <option value="">Selecione um catálogo...</option>
-          </select>
+          <select id="cat-catalogId"><option value="">Selecione um catálogo...</option></select>
         </div>
         <button class="btn btn-primary btn-full" onclick="loadCategories()">Listar Categorias</button>
         <div id="categories-list" style="margin-top:16px;"></div>
       </div>
     </div>
-
-    <!-- Criar categoria -->
     <div class="card">
       <div class="card-header">
         <div class="card-icon">➕</div>
@@ -535,37 +191,33 @@
       <div class="card-body">
         <div class="form-row">
           <label>Catálogo</label>
-          <select id="newcat-catalogId">
-            <option value="">Selecione um catálogo...</option>
-          </select>
+          <select id="newcat-catalogId"><option value="">Selecione um catálogo...</option></select>
         </div>
         <div class="form-row">
           <label>Nome da Categoria *</label>
           <input type="text" id="newcat-name" placeholder="Ex: Brigadeiros Gourmet">
         </div>
-        <div class="form-row">
-          <label>Ordem de exibição</label>
-          <input type="number" id="newcat-index" placeholder="1" value="1">
+        <div class="form-grid-2">
+          <div class="form-row">
+            <label>Ordem</label>
+            <input type="number" id="newcat-index" value="1">
+          </div>
+          <div class="form-row">
+            <label>Status</label>
+            <select id="newcat-status">
+              <option value="AVAILABLE">AVAILABLE</option>
+              <option value="UNAVAILABLE">UNAVAILABLE</option>
+            </select>
+          </div>
         </div>
-        <div class="form-row">
-          <label>Status</label>
-          <select id="newcat-status">
-            <option value="AVAILABLE">AVAILABLE</option>
-            <option value="UNAVAILABLE">UNAVAILABLE</option>
-          </select>
-        </div>
-        <button class="btn btn-primary btn-full" onclick="createCategory()">Criar Categoria</button>
-        <div id="create-cat-result" style="margin-top:12px;font-size:12px;"></div>
+        <button class="btn btn-primary btn-full" onclick="createCategory(this)">Criar Categoria</button>
+        <div id="create-cat-result" style="margin-top:12px;"></div>
       </div>
     </div>
   </div>
 
-  <!-- ============================================================ -->
-  <!-- PAGE: ITENS -->
-  <!-- ============================================================ -->
+  <!-- ITENS -->
   <div id="page-items" class="page">
-
-    <!-- Criar / Editar item -->
     <div class="card">
       <div class="card-header">
         <div class="card-icon">🍬</div>
@@ -575,237 +227,137 @@
         </div>
       </div>
       <div class="card-body">
-        <div class="form-row">
-          <label>ID do Item (deixe em branco para criar)</label>
-          <input type="text" id="item-id" placeholder="Ex: abc-123 (opcional)">
-        </div>
-        <div class="form-row">
-          <label>Nome *</label>
-          <input type="text" id="item-name" placeholder="Ex: Brigadeiro de Nutella">
-        </div>
-        <div class="form-row">
-          <label>Descrição</label>
-          <textarea id="item-desc" placeholder="Descreva o item delicioso..."></textarea>
+        <div class="form-row"><label>ID do Item (vazio = criar novo)</label><input type="text" id="item-id" placeholder="Deixe vazio para criar"></div>
+        <div class="form-row"><label>Nome *</label><input type="text" id="item-name" placeholder="Ex: Brigadeiro de Nutella"></div>
+        <div class="form-row"><label>Descrição</label><textarea id="item-desc" placeholder="Descreva o item..."></textarea></div>
+        <div class="form-grid-2">
+          <div class="form-row"><label>Preço (R$) *</label><input type="number" id="item-price" placeholder="12.90" step="0.01"></div>
+          <div class="form-row"><label>Preço Original (R$)</label><input type="number" id="item-orig-price" placeholder="15.90" step="0.01"></div>
         </div>
         <div class="form-grid-2">
-          <div class="form-row">
-            <label>Preço (R$) *</label>
-            <input type="number" id="item-price" placeholder="12.90" step="0.01">
-          </div>
-          <div class="form-row">
-            <label>Preço Original (R$)</label>
-            <input type="number" id="item-orig-price" placeholder="15.90" step="0.01">
-          </div>
+          <div class="form-row"><label>Status</label><select id="item-status"><option value="AVAILABLE">AVAILABLE</option><option value="UNAVAILABLE">UNAVAILABLE</option></select></div>
+          <div class="form-row"><label>URL da Imagem</label><input type="text" id="item-image" placeholder="https://..."></div>
         </div>
-        <div class="form-grid-2">
-          <div class="form-row">
-            <label>Status</label>
-            <select id="item-status">
-              <option value="AVAILABLE">AVAILABLE</option>
-              <option value="UNAVAILABLE">UNAVAILABLE</option>
-            </select>
-          </div>
-          <div class="form-row">
-            <label>URL da Imagem</label>
-            <input type="text" id="item-image" placeholder="https://...">
-          </div>
-        </div>
-        <div class="form-row">
-          <label>ID da Categoria</label>
-          <input type="text" id="item-categoryId" placeholder="Ex: cat-123">
-        </div>
-        <button class="btn btn-primary btn-full" onclick="saveItem()">Salvar Item</button>
-        <div id="item-result" style="margin-top:12px;font-size:12px;"></div>
+        <div class="form-row"><label>ID da Categoria</label><input type="text" id="item-categoryId" placeholder="Ex: cat-123"></div>
+        <button class="btn btn-primary btn-full" onclick="saveItem(this)">Salvar Item</button>
+        <div id="item-result" style="margin-top:12px;"></div>
       </div>
     </div>
-
-    <!-- Alterar preço item -->
     <div class="card">
       <div class="card-header">
         <div class="card-icon">💰</div>
-        <div>
-          <div class="card-title">Alterar Preço do Item</div>
-          <div class="card-subtitle">PATCH /merchants/{merchantId}/items/price</div>
-        </div>
+        <div><div class="card-title">Alterar Preço do Item</div><div class="card-subtitle">PATCH /merchants/{merchantId}/items/price</div></div>
       </div>
       <div class="card-body">
-        <div class="form-row">
-          <label>ID do Item *</label>
-          <input type="text" id="price-item-id" placeholder="Ex: abc-123">
-        </div>
+        <div class="form-row"><label>ID do Item *</label><input type="text" id="price-item-id" placeholder="abc-123"></div>
         <div class="form-grid-2">
-          <div class="form-row">
-            <label>Novo Preço (R$) *</label>
-            <input type="number" id="price-value" placeholder="14.90" step="0.01">
-          </div>
-          <div class="form-row">
-            <label>Preço Original (R$)</label>
-            <input type="number" id="price-original" placeholder="18.90" step="0.01">
-          </div>
+          <div class="form-row"><label>Novo Preço (R$) *</label><input type="number" id="price-value" step="0.01"></div>
+          <div class="form-row"><label>Preço Original (R$)</label><input type="number" id="price-original" step="0.01"></div>
         </div>
-        <button class="btn btn-primary btn-full" onclick="updateItemPrice()">Atualizar Preço</button>
-        <div id="price-result" style="margin-top:12px;font-size:12px;"></div>
+        <button class="btn btn-primary btn-full" onclick="updateItemPrice(this)">Atualizar Preço</button>
+        <div id="price-result" style="margin-top:12px;"></div>
       </div>
     </div>
-
-    <!-- Alterar status item -->
     <div class="card">
       <div class="card-header">
         <div class="card-icon">🔄</div>
-        <div>
-          <div class="card-title">Alterar Status do Item</div>
-          <div class="card-subtitle">PATCH /merchants/{merchantId}/items/status</div>
-        </div>
+        <div><div class="card-title">Alterar Status do Item</div><div class="card-subtitle">PATCH /merchants/{merchantId}/items/status</div></div>
       </div>
       <div class="card-body">
-        <div class="form-row">
-          <label>ID do Item *</label>
-          <input type="text" id="status-item-id" placeholder="Ex: abc-123">
-        </div>
-        <div class="form-row">
-          <label>Novo Status</label>
-          <select id="status-item-value">
-            <option value="AVAILABLE">AVAILABLE</option>
-            <option value="UNAVAILABLE">UNAVAILABLE</option>
-          </select>
-        </div>
-        <button class="btn btn-primary btn-full" onclick="updateItemStatus()">Atualizar Status</button>
-        <div id="status-item-result" style="margin-top:12px;font-size:12px;"></div>
+        <div class="form-row"><label>ID do Item *</label><input type="text" id="status-item-id" placeholder="abc-123"></div>
+        <div class="form-row"><label>Novo Status</label><select id="status-item-value"><option value="AVAILABLE">AVAILABLE</option><option value="UNAVAILABLE">UNAVAILABLE</option></select></div>
+        <button class="btn btn-primary btn-full" onclick="updateItemStatus(this)">Atualizar Status</button>
+        <div id="status-item-result" style="margin-top:12px;"></div>
       </div>
     </div>
   </div>
 
-  <!-- ============================================================ -->
-  <!-- PAGE: COMPLEMENTOS -->
-  <!-- ============================================================ -->
+  <!-- COMPLEMENTOS -->
   <div id="page-options" class="page">
-
-    <!-- Alterar preço complemento -->
     <div class="card">
       <div class="card-header">
         <div class="card-icon">💲</div>
-        <div>
-          <div class="card-title">Alterar Preço do Complemento</div>
-          <div class="card-subtitle">PATCH /merchants/{merchantId}/options/price</div>
-        </div>
+        <div><div class="card-title">Alterar Preço do Complemento</div><div class="card-subtitle">PATCH /merchants/{merchantId}/options/price</div></div>
       </div>
       <div class="card-body">
-        <div class="form-row">
-          <label>ID do Complemento *</label>
-          <input type="text" id="opt-price-id" placeholder="Ex: opt-abc-123">
-        </div>
+        <div class="form-row"><label>ID do Complemento *</label><input type="text" id="opt-price-id" placeholder="opt-abc-123"></div>
         <div class="form-grid-2">
-          <div class="form-row">
-            <label>Novo Preço (R$) *</label>
-            <input type="number" id="opt-price-value" placeholder="2.50" step="0.01">
-          </div>
-          <div class="form-row">
-            <label>Preço Original (R$)</label>
-            <input type="number" id="opt-price-original" placeholder="3.00" step="0.01">
-          </div>
+          <div class="form-row"><label>Novo Preço (R$) *</label><input type="number" id="opt-price-value" step="0.01"></div>
+          <div class="form-row"><label>Preço Original (R$)</label><input type="number" id="opt-price-original" step="0.01"></div>
         </div>
-        <button class="btn btn-primary btn-full" onclick="updateOptionPrice()">Atualizar Preço</button>
-        <div id="opt-price-result" style="margin-top:12px;font-size:12px;"></div>
+        <button class="btn btn-primary btn-full" onclick="updateOptionPrice(this)">Atualizar Preço</button>
+        <div id="opt-price-result" style="margin-top:12px;"></div>
       </div>
     </div>
-
-    <!-- Alterar status complemento -->
     <div class="card">
       <div class="card-header">
         <div class="card-icon">🔀</div>
-        <div>
-          <div class="card-title">Alterar Status do Complemento</div>
-          <div class="card-subtitle">PATCH /merchants/{merchantId}/options/status</div>
-        </div>
+        <div><div class="card-title">Alterar Status do Complemento</div><div class="card-subtitle">PATCH /merchants/{merchantId}/options/status</div></div>
       </div>
       <div class="card-body">
-        <div class="form-row">
-          <label>ID do Complemento *</label>
-          <input type="text" id="opt-status-id" placeholder="Ex: opt-abc-123">
-        </div>
-        <div class="form-row">
-          <label>Novo Status</label>
-          <select id="opt-status-value">
-            <option value="AVAILABLE">AVAILABLE</option>
-            <option value="UNAVAILABLE">UNAVAILABLE</option>
-          </select>
-        </div>
-        <button class="btn btn-primary btn-full" onclick="updateOptionStatus()">Atualizar Status</button>
-        <div id="opt-status-result" style="margin-top:12px;font-size:12px;"></div>
+        <div class="form-row"><label>ID do Complemento *</label><input type="text" id="opt-status-id" placeholder="opt-abc-123"></div>
+        <div class="form-row"><label>Novo Status</label><select id="opt-status-value"><option value="AVAILABLE">AVAILABLE</option><option value="UNAVAILABLE">UNAVAILABLE</option></select></div>
+        <button class="btn btn-primary btn-full" onclick="updateOptionStatus(this)">Atualizar Status</button>
+        <div id="opt-status-result" style="margin-top:12px;"></div>
       </div>
     </div>
   </div>
 
-  <!-- ============================================================ -->
-  <!-- PAGE: IMAGENS -->
-  <!-- ============================================================ -->
+  <!-- IMAGENS -->
   <div id="page-images" class="page">
     <div class="card">
       <div class="card-header">
         <div class="card-icon">📷</div>
-        <div>
-          <div class="card-title">Upload de Imagem</div>
-          <div class="card-subtitle">POST /merchants/{merchantId}/image/upload</div>
-        </div>
+        <div><div class="card-title">Upload de Imagem</div><div class="card-subtitle">POST /merchants/{merchantId}/image/upload</div></div>
       </div>
       <div class="card-body">
         <div class="upload-zone" id="upload-zone" onclick="document.getElementById('img-file').click()">
           <div style="font-size:32px;">🖼️</div>
           <p>Clique para selecionar ou arraste uma imagem</p>
-          <p style="font-size:11px;margin-top:4px;">JPG, PNG, WEBP — máx. 1MB recomendado</p>
+          <p style="font-size:11px;margin-top:4px;">JPG, PNG, WEBP</p>
         </div>
         <input type="file" id="img-file" accept="image/*" style="display:none" onchange="onImageSelect(event)">
         <img id="upload-preview" class="upload-preview" alt="Preview">
         <div id="img-selected-name" style="font-size:12px;color:var(--gray);margin-top:8px;"></div>
-        <div style="margin-top:16px;">
-          <button class="btn btn-primary btn-full" onclick="uploadImage()" id="upload-btn" disabled>Fazer Upload</button>
-        </div>
-        <div id="upload-result" style="margin-top:12px;font-size:12px;"></div>
-        <div id="upload-img-result" style="margin-top:12px;"></div>
+        <div style="margin-top:16px;"><button class="btn btn-primary btn-full" onclick="uploadImage(this)" id="upload-btn" disabled>Fazer Upload</button></div>
+        <div id="upload-result" style="margin-top:12px;"></div>
       </div>
     </div>
   </div>
 
-  <!-- ============================================================ -->
-  <!-- PAGE: CARDÁPIO (EVIDÊNCIA) -->
-  <!-- ============================================================ -->
+  <!-- CARDÁPIO -->
   <div id="page-menu" class="page">
     <div style="margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;">
       <div>
         <div style="font-family:'DM Serif Display',serif;font-size:22px;">🍽️ Cardápio</div>
-        <div style="font-size:12px;color:var(--gray);margin-top:2px;">Evidência de itens configurados — imagem, nome, descrição e valor</div>
+        <div style="font-size:12px;color:var(--gray);margin-top:2px;">Evidência — imagem, nome, descrição e valor</div>
       </div>
       <button class="btn btn-secondary btn-sm" onclick="loadMenu()">↻ Carregar</button>
     </div>
     <div id="menu-grid" class="menu-grid">
-      <div class="list-empty" style="grid-column:1/-1;">
-        <div class="icon">🍬</div>
-        Clique em "Carregar" para ver o cardápio configurado
-      </div>
+      <div class="list-empty" style="grid-column:1/-1;"><div class="icon">🍬</div>Clique em "Carregar" para ver o cardápio</div>
     </div>
   </div>
 
 </main>
 
 <script>
-// ================================================================
-// CONFIG
-// ================================================================
-const API_BASE = '/.netlify/functions/ifood-proxy';
-const MERCHANT_API = 'https://merchant-api.ifood.com.br';
+// ============================================================
+// CONFIG — aponta para a Vercel Function
+// ============================================================
+const API_BASE = '/api/ifood';
 
-// State
 let merchantId = '';
 let catalogs = [];
 
-// ================================================================
-// UI HELPERS
-// ================================================================
-function showPage(name) {
+// ============================================================
+// UI
+// ============================================================
+function showPage(name, el) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
-  event.currentTarget.classList.add('active');
+  if (el) el.classList.add('active');
 }
 
 function toast(msg, type = '') {
@@ -817,44 +369,29 @@ function toast(msg, type = '') {
 }
 
 function setLoading(btn, loading) {
-  if (loading) {
-    btn._orig = btn.innerHTML;
-    btn.disabled = true;
-    btn.innerHTML = '<div class="spinner"></div> Aguarde...';
-  } else {
-    btn.innerHTML = btn._orig || btn.innerHTML;
-    btn.disabled = false;
-  }
+  if (!btn) return;
+  if (loading) { btn._orig = btn.innerHTML; btn.disabled = true; btn.innerHTML = '<div class="spinner"></div> Aguarde...'; }
+  else { btn.innerHTML = btn._orig || 'OK'; btn.disabled = false; }
 }
 
-function resultHtml(data, ok) {
+function resultBox(data, ok) {
   const color = ok ? 'var(--green)' : 'var(--red)';
-  const icon = ok ? '✅' : '❌';
-  return `<div style="background:#f8f8f8;border-radius:8px;padding:10px;border:1px solid ${color}22;">
-    <div style="font-weight:700;color:${color};margin-bottom:4px;">${icon} ${ok ? 'Sucesso' : 'Erro'}</div>
+  return `<div style="background:#f8f8f8;border-radius:8px;padding:10px;border:1px solid ${color}33;">
+    <div style="font-weight:700;color:${color};margin-bottom:4px;">${ok ? '✅ Sucesso' : '❌ Erro'}</div>
     <pre style="white-space:pre-wrap;word-break:break-all;font-size:11px;color:#444;">${JSON.stringify(data, null, 2)}</pre>
   </div>`;
 }
 
-// ================================================================
-// API CALL
-// ================================================================
-async function api(path, method = 'GET', body = null, isMultipart = false) {
+// ============================================================
+// API — chama a Vercel Function
+// ============================================================
+async function api(path, method = 'GET', body = null) {
   if (!merchantId && path.includes('{merchantId}')) {
-    toast('Selecione um merchant primeiro!', 'warning');
-    throw new Error('No merchant selected');
+    toast('Selecione um merchant primeiro!', 'warning'); throw new Error('no merchant');
   }
-
   const url = API_BASE + path.replace('{merchantId}', merchantId);
-
   const opts = { method, headers: {} };
-  if (body && !isMultipart) {
-    opts.headers['Content-Type'] = 'application/json';
-    opts.body = JSON.stringify(body);
-  } else if (body && isMultipart) {
-    opts.body = body; // FormData
-  }
-
+  if (body) { opts.headers['Content-Type'] = 'application/json'; opts.body = JSON.stringify(body); }
   const res = await fetch(url, opts);
   const text = await res.text();
   let data;
@@ -862,67 +399,58 @@ async function api(path, method = 'GET', body = null, isMultipart = false) {
   return { status: res.status, data, ok: res.ok };
 }
 
-// ================================================================
-// MERCHANTS — carregar lista via token
-// ================================================================
+// ============================================================
+// MERCHANTS — busca automaticamente pelo token
+// ============================================================
 async function loadMerchants() {
   try {
-    const res = await api('/v1.0/merchants', 'GET');
-    if (res.ok && Array.isArray(res.data)) {
-      const sel = document.getElementById('merchantSelect');
-      sel.innerHTML = '';
-      res.data.forEach(m => {
-        const opt = document.createElement('option');
-        opt.value = m.id;
-        opt.textContent = m.name || m.id;
-        sel.appendChild(opt);
-      });
-      merchantId = sel.value;
-      toast('Merchants carregados!', 'success');
+    const res = await fetch(API_BASE + '/v1.0/merchants');
+    const data = await res.json();
+    const list = Array.isArray(data) ? data : [];
+
+    const sel = document.getElementById('merchantSelect');
+    if (list.length > 0) {
+      sel.innerHTML = list.map(m => `<option value="${m.id}">${m.name || m.id}</option>`).join('');
+      merchantId = list[0].id;
+      toast('Merchant carregado automaticamente!', 'success');
       loadCatalogs();
     } else {
       // Fallback: pedir manualmente
-      document.getElementById('merchantSelect').innerHTML = '<option value="">Digite abaixo ↓</option>';
-      promptMerchantId();
+      sel.innerHTML = '<option value="">— Informe o ID —</option>';
+      const id = prompt('Não foi possível carregar automaticamente.\nCole o seu Merchant ID do iFood:');
+      if (id) {
+        merchantId = id.trim();
+        sel.innerHTML = `<option value="${merchantId}">${merchantId.substring(0, 20)}...</option>`;
+        loadCatalogs();
+      }
     }
   } catch (e) {
-    promptMerchantId();
-  }
-}
-
-function promptMerchantId() {
-  const id = prompt('Cole o seu Merchant ID do iFood:');
-  if (id) {
-    merchantId = id.trim();
-    const sel = document.getElementById('merchantSelect');
-    sel.innerHTML = `<option value="${merchantId}">${merchantId.substring(0,18)}...</option>`;
-    toast('Merchant definido!', 'success');
-    loadCatalogs();
+    const id = prompt('Erro ao carregar merchants.\nCole o seu Merchant ID do iFood:');
+    if (id) {
+      merchantId = id.trim();
+      document.getElementById('merchantSelect').innerHTML = `<option value="${merchantId}">${merchantId.substring(0, 20)}...</option>`;
+      loadCatalogs();
+    }
   }
 }
 
 function onMerchantChange() {
   merchantId = document.getElementById('merchantSelect').value;
-  loadCatalogs();
+  if (merchantId) loadCatalogs();
 }
 
-// ================================================================
-// CATÁLOGOS — GET /merchants/{merchantId}/catalogs
-// ================================================================
+// ============================================================
+// CATÁLOGOS
+// ============================================================
 async function loadCatalogs() {
   if (!merchantId) return;
   const el = document.getElementById('catalogs-list');
-  el.innerHTML = '<div class="list-empty"><div class="spinner" style="border-color:rgba(0,0,0,0.1);border-top-color:var(--pink);margin:0 auto;"></div></div>';
-
+  el.innerHTML = '<div class="list-empty"><div class="spinner" style="border-color:rgba(0,0,0,.1);border-top-color:var(--pink);margin:0 auto;width:24px;height:24px;border-width:3px;"></div></div>';
   try {
     const res = await api('/catalog/v1.0/merchants/{merchantId}/catalogs');
-    if (res.ok) {
-      catalogs = Array.isArray(res.data) ? res.data : (res.data.catalogs || []);
-      renderCatalogs(catalogs);
-      populateCatalogSelects(catalogs);
-    } else {
-      el.innerHTML = resultHtml(res.data, false);
-    }
+    catalogs = Array.isArray(res.data) ? res.data : (res.data?.catalogs || []);
+    renderCatalogs(catalogs);
+    populateCatalogSelects(catalogs);
   } catch(e) {
     el.innerHTML = `<div class="list-empty">Erro: ${e.message}</div>`;
   }
@@ -930,19 +458,15 @@ async function loadCatalogs() {
 
 function renderCatalogs(list) {
   const el = document.getElementById('catalogs-list');
-  if (!list.length) {
-    el.innerHTML = '<div class="list-empty"><div class="icon">📭</div>Nenhum catálogo encontrado</div>';
-    return;
-  }
+  if (!list.length) { el.innerHTML = '<div class="list-empty"><div class="icon">📭</div>Nenhum catálogo encontrado</div>'; return; }
   el.innerHTML = list.map(c => `
     <div class="item-row">
       <div class="item-row-info">
-        <div class="item-row-name">${c.catalogId || c.id || 'Catálogo'}</div>
+        <div class="item-row-name">${c.catalogId || c.id}</div>
         <div class="item-row-sub">Status: ${c.status || '—'} · Contexto: ${c.context || '—'}</div>
       </div>
       <span class="badge ${c.status === 'AVAILABLE' ? 'badge-green' : 'badge-gray'}">${c.status || '?'}</span>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
 function populateCatalogSelects(list) {
@@ -950,211 +474,122 @@ function populateCatalogSelects(list) {
     const sel = document.getElementById(id);
     if (!sel) return;
     sel.innerHTML = '<option value="">Selecione um catálogo...</option>';
-    list.forEach(c => {
-      const opt = document.createElement('option');
-      opt.value = c.catalogId || c.id;
-      opt.textContent = (c.catalogId || c.id) + (c.context ? ` (${c.context})` : '');
-      sel.appendChild(opt);
-    });
+    list.forEach(c => { sel.innerHTML += `<option value="${c.catalogId || c.id}">${(c.catalogId || c.id).substring(0,30)}${c.context ? ' ('+c.context+')' : ''}</option>`; });
   });
 }
 
-// ================================================================
-// CATEGORIAS — GET /merchants/{merchantId}/catalogs/{catalogId}/categories
-// ================================================================
+// ============================================================
+// CATEGORIAS
+// ============================================================
 async function loadCategories() {
   const catalogId = document.getElementById('cat-catalogId').value;
   if (!catalogId) { toast('Selecione um catálogo!', 'warning'); return; }
-
   const el = document.getElementById('categories-list');
-  el.innerHTML = '<div class="list-empty"><div class="spinner" style="border-color:rgba(0,0,0,0.1);border-top-color:var(--pink);margin:0 auto;"></div></div>';
-
+  el.innerHTML = '<div class="list-empty"><div class="spinner" style="border-color:rgba(0,0,0,.1);border-top-color:var(--pink);margin:0 auto;width:24px;height:24px;border-width:3px;"></div></div>';
   const res = await api(`/catalog/v1.0/merchants/{merchantId}/catalogs/${catalogId}/categories`);
   if (res.ok) {
-    const cats = Array.isArray(res.data) ? res.data : (res.data.categories || []);
-    if (!cats.length) {
-      el.innerHTML = '<div class="list-empty"><div class="icon">🗂️</div>Nenhuma categoria encontrada</div>';
-    } else {
-      el.innerHTML = cats.map(c => `
-        <div class="item-row">
-          <div class="item-row-info">
-            <div class="item-row-name">${c.name || c.id || 'Categoria'}</div>
-            <div class="item-row-sub">ID: ${c.id || '—'} · Status: ${c.status || '—'} · Ordem: ${c.index ?? '—'}</div>
-          </div>
-          <span class="badge ${c.status === 'AVAILABLE' ? 'badge-green' : 'badge-gray'}">${c.status || '?'}</span>
-        </div>
-      `).join('');
-    }
-  } else {
-    el.innerHTML = resultHtml(res.data, false);
-  }
+    const cats = Array.isArray(res.data) ? res.data : (res.data?.categories || []);
+    el.innerHTML = cats.length
+      ? cats.map(c => `<div class="item-row"><div class="item-row-info"><div class="item-row-name">${c.name || c.id}</div><div class="item-row-sub">ID: ${c.id || '—'} · Ordem: ${c.index ?? '—'}</div></div><span class="badge ${c.status === 'AVAILABLE' ? 'badge-green' : 'badge-gray'}">${c.status || '?'}</span></div>`).join('')
+      : '<div class="list-empty"><div class="icon">🗂️</div>Nenhuma categoria encontrada</div>';
+  } else { el.innerHTML = resultBox(res.data, false); }
 }
 
-// ================================================================
-// CRIAR CATEGORIA — POST /merchants/{merchantId}/catalogs/{catalogId}/categories
-// ================================================================
-async function createCategory() {
+async function createCategory(btn) {
   const catalogId = document.getElementById('newcat-catalogId').value;
   const name = document.getElementById('newcat-name').value.trim();
-  const index = parseInt(document.getElementById('newcat-index').value) || 1;
-  const status = document.getElementById('newcat-status').value;
-
   if (!catalogId) { toast('Selecione um catálogo!', 'warning'); return; }
-  if (!name) { toast('Informe o nome da categoria!', 'warning'); return; }
-
-  const btn = event.currentTarget;
+  if (!name) { toast('Informe o nome!', 'warning'); return; }
   setLoading(btn, true);
-
-  const payload = { name, index, status };
-  const res = await api(`/catalog/v1.0/merchants/{merchantId}/catalogs/${catalogId}/categories`, 'POST', payload);
-  document.getElementById('create-cat-result').innerHTML = resultHtml(res.data, res.ok);
-
-  if (res.ok) toast('Categoria criada!', 'success');
-  else toast('Erro ao criar categoria', 'error');
-
+  const res = await api(`/catalog/v1.0/merchants/{merchantId}/catalogs/${catalogId}/categories`, 'POST', {
+    name, index: parseInt(document.getElementById('newcat-index').value) || 1,
+    status: document.getElementById('newcat-status').value
+  });
+  document.getElementById('create-cat-result').innerHTML = resultBox(res.data, res.ok);
+  toast(res.ok ? 'Categoria criada!' : 'Erro!', res.ok ? 'success' : 'error');
   setLoading(btn, false);
 }
 
-// ================================================================
-// ITEM — PUT /merchants/{merchantId}/items
-// ================================================================
-async function saveItem() {
+// ============================================================
+// ITENS
+// ============================================================
+async function saveItem(btn) {
   const name = document.getElementById('item-name').value.trim();
   const price = parseFloat(document.getElementById('item-price').value);
-
-  if (!name) { toast('Informe o nome do item!', 'warning'); return; }
+  if (!name) { toast('Informe o nome!', 'warning'); return; }
   if (!price) { toast('Informe o preço!', 'warning'); return; }
-
-  const btn = event.currentTarget;
   setLoading(btn, true);
-
   const id = document.getElementById('item-id').value.trim();
-  const desc = document.getElementById('item-desc').value.trim();
-  const origPrice = parseFloat(document.getElementById('item-orig-price').value) || undefined;
-  const status = document.getElementById('item-status').value;
-  const imageUrl = document.getElementById('item-image').value.trim();
-  const categoryId = document.getElementById('item-categoryId').value.trim();
-
+  const origPrice = parseFloat(document.getElementById('item-orig-price').value);
   const payload = {
     ...(id ? { id } : {}),
     name,
-    description: desc,
+    description: document.getElementById('item-desc').value.trim(),
     price: { value: Math.round(price * 100), currency: 'BRL', ...(origPrice ? { originalValue: Math.round(origPrice * 100) } : {}) },
-    status,
-    ...(imageUrl ? { logoUrl: imageUrl } : {}),
-    ...(categoryId ? { categoryId } : {}),
+    status: document.getElementById('item-status').value,
+    ...(document.getElementById('item-image').value ? { logoUrl: document.getElementById('item-image').value.trim() } : {}),
+    ...(document.getElementById('item-categoryId').value ? { categoryId: document.getElementById('item-categoryId').value.trim() } : {}),
   };
-
   const res = await api('/catalog/v1.0/merchants/{merchantId}/items', 'PUT', payload);
-  document.getElementById('item-result').innerHTML = resultHtml(res.data, res.ok);
-
-  if (res.ok) toast('Item salvo!', 'success');
-  else toast('Erro ao salvar item', 'error');
-
+  document.getElementById('item-result').innerHTML = resultBox(res.data, res.ok);
+  toast(res.ok ? 'Item salvo!' : 'Erro!', res.ok ? 'success' : 'error');
   setLoading(btn, false);
 }
 
-// ================================================================
-// PREÇO DO ITEM — PATCH /merchants/{merchantId}/items/price
-// ================================================================
-async function updateItemPrice() {
+async function updateItemPrice(btn) {
   const itemId = document.getElementById('price-item-id').value.trim();
   const price = parseFloat(document.getElementById('price-value').value);
-
-  if (!itemId) { toast('Informe o ID do item!', 'warning'); return; }
-  if (!price) { toast('Informe o novo preço!', 'warning'); return; }
-
-  const btn = event.currentTarget;
+  if (!itemId || !price) { toast('Preencha os campos!', 'warning'); return; }
   setLoading(btn, true);
-
-  const origPrice = parseFloat(document.getElementById('price-original').value) || undefined;
-  const payload = {
-    itemId,
-    price: { value: Math.round(price * 100), currency: 'BRL', ...(origPrice ? { originalValue: Math.round(origPrice * 100) } : {}) }
-  };
-
-  const res = await api('/catalog/v1.0/merchants/{merchantId}/items/price', 'PATCH', payload);
-  document.getElementById('price-result').innerHTML = resultHtml(res.data, res.ok);
-
-  if (res.ok) toast('Preço atualizado!', 'success');
-  else toast('Erro ao atualizar preço', 'error');
-
+  const origPrice = parseFloat(document.getElementById('price-original').value);
+  const res = await api('/catalog/v1.0/merchants/{merchantId}/items/price', 'PATCH', {
+    itemId, price: { value: Math.round(price * 100), currency: 'BRL', ...(origPrice ? { originalValue: Math.round(origPrice * 100) } : {}) }
+  });
+  document.getElementById('price-result').innerHTML = resultBox(res.data, res.ok);
+  toast(res.ok ? 'Preço atualizado!' : 'Erro!', res.ok ? 'success' : 'error');
   setLoading(btn, false);
 }
 
-// ================================================================
-// STATUS DO ITEM — PATCH /merchants/{merchantId}/items/status
-// ================================================================
-async function updateItemStatus() {
+async function updateItemStatus(btn) {
   const itemId = document.getElementById('status-item-id').value.trim();
-  const status = document.getElementById('status-item-value').value;
-
-  if (!itemId) { toast('Informe o ID do item!', 'warning'); return; }
-
-  const btn = event.currentTarget;
+  if (!itemId) { toast('Informe o ID!', 'warning'); return; }
   setLoading(btn, true);
-
-  const res = await api('/catalog/v1.0/merchants/{merchantId}/items/status', 'PATCH', { itemId, status });
-  document.getElementById('status-item-result').innerHTML = resultHtml(res.data, res.ok);
-
-  if (res.ok) toast('Status do item atualizado!', 'success');
-  else toast('Erro ao atualizar status', 'error');
-
+  const res = await api('/catalog/v1.0/merchants/{merchantId}/items/status', 'PATCH', { itemId, status: document.getElementById('status-item-value').value });
+  document.getElementById('status-item-result').innerHTML = resultBox(res.data, res.ok);
+  toast(res.ok ? 'Status atualizado!' : 'Erro!', res.ok ? 'success' : 'error');
   setLoading(btn, false);
 }
 
-// ================================================================
-// PREÇO DO COMPLEMENTO — PATCH /merchants/{merchantId}/options/price
-// ================================================================
-async function updateOptionPrice() {
+// ============================================================
+// COMPLEMENTOS
+// ============================================================
+async function updateOptionPrice(btn) {
   const optionId = document.getElementById('opt-price-id').value.trim();
   const price = parseFloat(document.getElementById('opt-price-value').value);
-
-  if (!optionId) { toast('Informe o ID do complemento!', 'warning'); return; }
-  if (!price) { toast('Informe o novo preço!', 'warning'); return; }
-
-  const btn = event.currentTarget;
+  if (!optionId || !price) { toast('Preencha os campos!', 'warning'); return; }
   setLoading(btn, true);
-
-  const origPrice = parseFloat(document.getElementById('opt-price-original').value) || undefined;
-  const payload = {
-    optionId,
-    price: { value: Math.round(price * 100), currency: 'BRL', ...(origPrice ? { originalValue: Math.round(origPrice * 100) } : {}) }
-  };
-
-  const res = await api('/catalog/v1.0/merchants/{merchantId}/options/price', 'PATCH', payload);
-  document.getElementById('opt-price-result').innerHTML = resultHtml(res.data, res.ok);
-
-  if (res.ok) toast('Preço do complemento atualizado!', 'success');
-  else toast('Erro ao atualizar preço', 'error');
-
+  const origPrice = parseFloat(document.getElementById('opt-price-original').value);
+  const res = await api('/catalog/v1.0/merchants/{merchantId}/options/price', 'PATCH', {
+    optionId, price: { value: Math.round(price * 100), currency: 'BRL', ...(origPrice ? { originalValue: Math.round(origPrice * 100) } : {}) }
+  });
+  document.getElementById('opt-price-result').innerHTML = resultBox(res.data, res.ok);
+  toast(res.ok ? 'Preço atualizado!' : 'Erro!', res.ok ? 'success' : 'error');
   setLoading(btn, false);
 }
 
-// ================================================================
-// STATUS DO COMPLEMENTO — PATCH /merchants/{merchantId}/options/status
-// ================================================================
-async function updateOptionStatus() {
+async function updateOptionStatus(btn) {
   const optionId = document.getElementById('opt-status-id').value.trim();
-  const status = document.getElementById('opt-status-value').value;
-
-  if (!optionId) { toast('Informe o ID do complemento!', 'warning'); return; }
-
-  const btn = event.currentTarget;
+  if (!optionId) { toast('Informe o ID!', 'warning'); return; }
   setLoading(btn, true);
-
-  const res = await api('/catalog/v1.0/merchants/{merchantId}/options/status', 'PATCH', { optionId, status });
-  document.getElementById('opt-status-result').innerHTML = resultHtml(res.data, res.ok);
-
-  if (res.ok) toast('Status do complemento atualizado!', 'success');
-  else toast('Erro ao atualizar status', 'error');
-
+  const res = await api('/catalog/v1.0/merchants/{merchantId}/options/status', 'PATCH', { optionId, status: document.getElementById('opt-status-value').value });
+  document.getElementById('opt-status-result').innerHTML = resultBox(res.data, res.ok);
+  toast(res.ok ? 'Status atualizado!' : 'Erro!', res.ok ? 'success' : 'error');
   setLoading(btn, false);
 }
 
-// ================================================================
-// UPLOAD DE IMAGEM — POST /merchants/{merchantId}/image/upload
-// ================================================================
+// ============================================================
+// UPLOAD DE IMAGEM
+// ============================================================
 let selectedImageFile = null;
 
 function onImageSelect(e) {
@@ -1163,138 +598,73 @@ function onImageSelect(e) {
   selectedImageFile = file;
   document.getElementById('img-selected-name').textContent = `📄 ${file.name} (${(file.size/1024).toFixed(1)} KB)`;
   document.getElementById('upload-btn').disabled = false;
-
   const reader = new FileReader();
-  reader.onload = ev => {
-    const preview = document.getElementById('upload-preview');
-    preview.src = ev.target.result;
-    preview.style.display = 'block';
-  };
+  reader.onload = ev => { const p = document.getElementById('upload-preview'); p.src = ev.target.result; p.style.display = 'block'; };
   reader.readAsDataURL(file);
 }
 
-// Drag & Drop
 const zone = document.getElementById('upload-zone');
-zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
-zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+zone.addEventListener('dragover', e => { e.preventDefault(); zone.style.borderColor = 'var(--pink)'; });
+zone.addEventListener('dragleave', () => zone.style.borderColor = '');
 zone.addEventListener('drop', e => {
-  e.preventDefault();
-  zone.classList.remove('drag-over');
+  e.preventDefault(); zone.style.borderColor = '';
   const file = e.dataTransfer.files[0];
-  if (file) {
-    selectedImageFile = file;
-    const ev2 = { target: { files: [file] } };
-    onImageSelect(ev2);
-  }
+  if (file) { selectedImageFile = file; onImageSelect({ target: { files: [file] } }); }
 });
 
-async function uploadImage() {
-  if (!selectedImageFile) { toast('Selecione uma imagem!', 'warning'); return; }
-  if (!merchantId) { toast('Selecione um merchant!', 'warning'); return; }
-
-  const btn = document.getElementById('upload-btn');
+async function uploadImage(btn) {
+  if (!selectedImageFile || !merchantId) { toast('Selecione uma imagem e um merchant!', 'warning'); return; }
   setLoading(btn, true);
-
   const formData = new FormData();
   formData.append('file', selectedImageFile);
-
   try {
-    const url = API_BASE + `/catalog/v1.0/merchants/${merchantId}/image/upload`;
-    const res = await fetch(url, { method: 'POST', body: formData });
+    const res = await fetch(`${API_BASE}/catalog/v1.0/merchants/${merchantId}/image/upload`, { method: 'POST', body: formData });
     const text = await res.text();
-    let data;
-    try { data = JSON.parse(text); } catch { data = text; }
-
-    document.getElementById('upload-result').innerHTML = resultHtml(data, res.ok);
-
-    if (res.ok) {
-      toast('Upload realizado!', 'success');
-      const imgUrl = data.url || data.imageUrl || (typeof data === 'string' ? data : null);
-      if (imgUrl) {
-        document.getElementById('upload-img-result').innerHTML = `
-          <div style="margin-top:8px;">
-            <div style="font-size:11px;color:var(--gray);margin-bottom:6px;">URL retornada:</div>
-            <div style="font-size:12px;word-break:break-all;background:#f0f0f0;padding:8px;border-radius:8px;">${imgUrl}</div>
-            <img src="${imgUrl}" style="max-width:100%;margin-top:8px;border-radius:8px;" alt="Imagem enviada">
-          </div>`;
-      }
-    } else {
-      toast('Erro no upload', 'error');
-    }
-  } catch (e) {
-    document.getElementById('upload-result').innerHTML = resultHtml({ error: e.message }, false);
-    toast('Erro no upload', 'error');
-  }
-
+    let data; try { data = JSON.parse(text); } catch { data = text; }
+    document.getElementById('upload-result').innerHTML = resultBox(data, res.ok);
+    if (res.ok) { toast('Upload realizado!', 'success'); }
+    else { toast('Erro no upload', 'error'); }
+  } catch(e) { toast('Erro: ' + e.message, 'error'); }
   setLoading(btn, false);
 }
 
-// ================================================================
-// CARDÁPIO (EVIDÊNCIA) — carrega itens do catálogo
-// ================================================================
+// ============================================================
+// CARDÁPIO (evidência)
+// ============================================================
 async function loadMenu() {
   if (!merchantId) { toast('Selecione um merchant!', 'warning'); return; }
   const grid = document.getElementById('menu-grid');
-  grid.innerHTML = '<div class="list-empty" style="grid-column:1/-1;"><div class="spinner" style="border-color:rgba(0,0,0,0.1);border-top-color:var(--pink);margin:0 auto;"></div></div>';
-
-  // 1. Buscar catálogos
+  grid.innerHTML = '<div class="list-empty" style="grid-column:1/-1;"><div class="spinner" style="border-color:rgba(0,0,0,.1);border-top-color:var(--pink);margin:0 auto;width:24px;height:24px;border-width:3px;"></div></div>';
   const catRes = await api('/catalog/v1.0/merchants/{merchantId}/catalogs');
   if (!catRes.ok) { grid.innerHTML = '<div class="list-empty">Erro ao carregar catálogos</div>'; return; }
-
-  const cats = Array.isArray(catRes.data) ? catRes.data : (catRes.data.catalogs || []);
-  if (!cats.length) { grid.innerHTML = '<div class="list-empty">Nenhum catálogo encontrado</div>'; return; }
-
+  const cats = Array.isArray(catRes.data) ? catRes.data : (catRes.data?.catalogs || []);
   const allItems = [];
-
-  // 2. Para cada catálogo, buscar categorias
   for (const cat of cats.slice(0, 3)) {
     const cid = cat.catalogId || cat.id;
     const cRes = await api(`/catalog/v1.0/merchants/{merchantId}/catalogs/${cid}/categories`);
     if (!cRes.ok) continue;
-    const categories = Array.isArray(cRes.data) ? cRes.data : (cRes.data.categories || []);
-
-    for (const category of categories) {
-      const items = category.items || category.products || [];
-      items.forEach(it => {
-        allItems.push({ ...it, categoryName: category.name });
-      });
-    }
+    const categories = Array.isArray(cRes.data) ? cRes.data : (cRes.data?.categories || []);
+    categories.forEach(cat => (cat.items || cat.products || []).forEach(it => allItems.push({ ...it, categoryName: cat.name })));
   }
-
-  if (!allItems.length) {
-    grid.innerHTML = '<div class="list-empty" style="grid-column:1/-1;"><div class="icon">🍬</div>Nenhum item encontrado. Configure itens na aba Itens.</div>';
-    return;
-  }
-
+  if (!allItems.length) { grid.innerHTML = '<div class="list-empty" style="grid-column:1/-1;"><div class="icon">🍬</div>Nenhum item encontrado. Cadastre itens na aba Itens.</div>'; return; }
   grid.innerHTML = allItems.map(item => {
-    const price = item.price?.value ? (item.price.value / 100).toFixed(2).replace('.', ',') : (item.price || '—');
-    const img = item.logoUrl || item.imageUrl || item.image || '';
-    const desc = item.description || 'Sem descrição';
-    const name = item.name || 'Item';
-    const cat = item.categoryName || '';
-
+    const price = item.price?.value ? (item.price.value/100).toFixed(2).replace('.',',') : (item.price || '—');
+    const img = item.logoUrl || item.imageUrl || '';
     return `<div class="menu-card">
-      <div class="menu-card-img">
-        ${img
-          ? `<img src="${img}" alt="${name}" onerror="this.parentElement.innerHTML='🍬'">`
-          : '🍬'}
-      </div>
+      <div class="menu-card-img">${img ? `<img src="${img}" alt="${item.name}" onerror="this.parentElement.innerHTML='🍬'">` : '🍬'}</div>
       <div class="menu-card-body">
-        ${cat ? `<div style="font-size:10px;color:var(--gray);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">${cat}</div>` : ''}
-        <div class="menu-card-name">${name}</div>
-        <div class="menu-card-desc">${desc}</div>
+        ${item.categoryName ? `<div style="font-size:10px;color:var(--gray);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">${item.categoryName}</div>` : ''}
+        <div class="menu-card-name">${item.name || 'Item'}</div>
+        <div class="menu-card-desc">${item.description || 'Sem descrição'}</div>
         <div class="menu-card-price">R$ ${price}</div>
-      </div>
-    </div>`;
+      </div></div>`;
   }).join('');
 }
 
-// ================================================================
+// ============================================================
 // INIT
-// ================================================================
-window.addEventListener('DOMContentLoaded', () => {
-  loadMerchants();
-});
+// ============================================================
+window.addEventListener('DOMContentLoaded', loadMerchants);
 </script>
 </body>
 </html>
