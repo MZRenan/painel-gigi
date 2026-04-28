@@ -210,6 +210,13 @@
             </select>
           </div>
         </div>
+        <div class="form-row">
+          <label>Template</label>
+          <select id="newcat-template">
+            <option value="DEFAULT">DEFAULT (padrão)</option>
+            <option value="PIZZA">PIZZA</option>
+          </select>
+        </div>
         <button class="btn btn-primary btn-full" onclick="createCategory(this)">Criar Categoria</button>
         <div id="create-cat-result" style="margin-top:12px;"></div>
       </div>
@@ -502,8 +509,10 @@ async function createCategory(btn) {
   if (!name) { toast('Informe o nome!', 'warning'); return; }
   setLoading(btn, true);
   const res = await api(`/catalog/v1.0/merchants/{merchantId}/catalogs/${catalogId}/categories`, 'POST', {
-    name, index: parseInt(document.getElementById('newcat-index').value) || 1,
-    status: document.getElementById('newcat-status').value
+    name,
+    index: parseInt(document.getElementById('newcat-index').value) || 1,
+    status: document.getElementById('newcat-status').value,
+    template: document.getElementById('newcat-template').value
   });
   document.getElementById('create-cat-result').innerHTML = resultBox(res.data, res.ok);
   toast(res.ok ? 'Categoria criada!' : 'Erro!', res.ok ? 'success' : 'error');
