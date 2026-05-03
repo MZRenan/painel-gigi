@@ -369,13 +369,15 @@ let merchantId = '';
 let catalogs = [];
 
 async function api(path, method = 'GET', body = null) {
-  // 1. Substitui o merchantId no path antes de qualquer coisa
+  // 1. Substitui o {merchantId} se ele existir no caminho
   let finalPath = path.replace('{merchantId}', merchantId);
   
-  // 2. Garante que o path comece com /
+  // 2. Garante que comece com /
   if (!finalPath.startsWith('/')) finalPath = '/' + finalPath;
   
-  // 3. Monta a URL final sem duplicar o prefixo /api/ifood
+  // 3. Define a URL final. 
+  // Se for a chamada de login (merchants), ela vai pura. 
+  // Se for de catálogo, o path já vai estar com o ID trocado.
   const url = API_BASE + finalPath;
   
   const opts = { 
@@ -390,22 +392,19 @@ async function api(path, method = 'GET', body = null) {
 
   try {
     const res = await fetch(url, opts);
+    
+    // Se não for OK (ex: 404), tenta ler o erro para te mostrar no painel
+    if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        return { ok: false, data: errData, status: res.status };
+    }
+
     const data = await res.json().catch(() => ({}));
-    return { ok: res.ok, data, status: res.status };
+    return { ok: true, data, status: res.status };
   } catch (e) { 
-    return { ok: false, data: { message: "Erro de conexão: " + e.message } }; 
+    return { ok: false, data: { message: "Erro de rede: " + e.message } }; 
   }
 }
-  
-  // 2. Monta a URL garantindo que o merchantId seja substituído corretamente
-  const url = API_BASE + cleanPath.replace('{merchantId}', merchantId);
-  
-  const opts = { 
-    method, 
-    headers: {
-      'Accept': 'application/json'
-    } 
-  };
 
   if (body) { 
     opts.headers['Content-Type'] = 'application/json'; 
