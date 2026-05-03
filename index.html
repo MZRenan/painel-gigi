@@ -369,8 +369,33 @@ let merchantId = '';
 let catalogs = [];
 
 async function api(path, method = 'GET', body = null) {
-  // 1. Limpa o path: remove barras extras no início se existirem
-  const cleanPath = path.startsWith('/') ? path : '/' + path;
+  // 1. Substitui o merchantId no path antes de qualquer coisa
+  let finalPath = path.replace('{merchantId}', merchantId);
+  
+  // 2. Garante que o path comece com /
+  if (!finalPath.startsWith('/')) finalPath = '/' + finalPath;
+  
+  // 3. Monta a URL final sem duplicar o prefixo /api/ifood
+  const url = API_BASE + finalPath;
+  
+  const opts = { 
+    method, 
+    headers: { 'Accept': 'application/json' } 
+  };
+
+  if (body) { 
+    opts.headers['Content-Type'] = 'application/json'; 
+    opts.body = JSON.stringify(body); 
+  }
+
+  try {
+    const res = await fetch(url, opts);
+    const data = await res.json().catch(() => ({}));
+    return { ok: res.ok, data, status: res.status };
+  } catch (e) { 
+    return { ok: false, data: { message: "Erro de conexão: " + e.message } }; 
+  }
+}
   
   // 2. Monta a URL garantindo que o merchantId seja substituído corretamente
   const url = API_BASE + cleanPath.replace('{merchantId}', merchantId);
