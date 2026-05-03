@@ -7,17 +7,9 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
   <style>
     :root {
-      --pink: #e8317a;
-      --pink-light: #fce8f1;
-      --pink-dark: #b8225e;
-      --dark: #1a0f0a;
-      --gray: #6b6b6b;
-      --border: #ebebeb;
-      --bg: #f7f4f2;
-      --white: #fff;
-      --green: #16a34a;
-      --red: #dc2626;
-      --yellow: #d97706;
+      --pink: #e8317a; --pink-light: #fce8f1; --pink-dark: #b8225e;
+      --dark: #1a0f0a; --gray: #6b6b6b; --border: #ebebeb;
+      --bg: #f7f4f2; --white: #fff; --green: #16a34a; --red: #dc2626; --yellow: #d97706;
       --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.05);
       --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
     }
@@ -30,41 +22,34 @@
     .brand img { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.15); }
     .brand-text h1 { font-family: 'DM Serif Display', serif; font-size: 17px; color: #fff; line-height: 1; }
     .brand-text p { font-size: 10px; color: rgba(255,255,255,0.35); margin-top: 2px; letter-spacing: 0.04em; text-transform: uppercase; }
-
     .merchant-chip { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 99px; padding: 6px 6px 6px 12px; }
     .merchant-chip-name { font-size: 12px; color: rgba(255,255,255,0.8); max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .merchant-chip-logout { width: 26px; height: 26px; border-radius: 50%; background: rgba(255,255,255,0.08); border: none; color: rgba(255,255,255,0.5); font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; flex-shrink: 0; }
     .merchant-chip-logout:hover { background: rgba(220,38,38,0.2); color: #fca5a5; }
-
     .tabs { display: flex; overflow-x: auto; scrollbar-width: none; }
     .tabs::-webkit-scrollbar { display: none; }
     .tab { flex-shrink: 0; padding: 10px 16px; font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.45); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; }
     .tab.active { color: var(--pink); border-bottom-color: var(--pink); }
-
     .main { padding: 16px; max-width: 680px; margin: 0 auto; }
-
     #toast-container { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 8px; align-items: center; }
     .toast { background: var(--dark); color: #fff; padding: 10px 20px; border-radius: 99px; font-size: 13px; font-weight: 500; box-shadow: var(--shadow-lg); animation: toastIn 0.3s ease; white-space: nowrap; }
     .toast.success { background: var(--green); }
     .toast.error { background: var(--red); }
     .toast.warning { background: var(--yellow); }
     @keyframes toastIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
     .card { background: var(--white); border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; margin-bottom: 16px; }
     .card-header { padding: 16px 20px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
     .card-icon { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; background: var(--pink-light); flex-shrink: 0; }
     .card-title { font-size: 15px; font-weight: 700; }
     .card-subtitle { font-size: 11px; color: var(--gray); margin-top: 1px; }
     .card-body { padding: 16px 20px; }
-
     .form-row { margin-bottom: 14px; }
     .form-row:last-child { margin-bottom: 0; }
     label { display: block; font-size: 11px; font-weight: 700; color: var(--gray); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
-    input[type=text], input[type=number], input[type=file], textarea, select { width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 14px; font-family: 'DM Sans', sans-serif; background: #fafafa; color: var(--dark); transition: border-color 0.2s; outline: none; }
+    input[type=text], input[type=number], textarea, select { width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 14px; font-family: 'DM Sans', sans-serif; background: #fafafa; color: var(--dark); transition: border-color 0.2s; outline: none; }
     input:focus, textarea:focus, select:focus { border-color: var(--pink); background: #fff; }
     textarea { resize: vertical; min-height: 80px; }
     .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
     .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 20px; border-radius: 10px; font-size: 13px; font-weight: 700; font-family: 'DM Sans', sans-serif; cursor: pointer; border: none; transition: all 0.18s; }
     .btn:active { transform: scale(0.97); }
     .btn-primary { background: var(--pink); color: #fff; }
@@ -73,27 +58,20 @@
     .btn-sm { padding: 6px 12px; font-size: 11px; border-radius: 7px; }
     .btn-full { width: 100%; }
     .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-    .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; }
+    .spinner { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; display: inline-block; }
     @keyframes spin { to { transform: rotate(360deg); } }
-
     .list-empty { text-align: center; padding: 32px 16px; color: var(--gray); font-size: 13px; }
     .list-empty .icon { font-size: 32px; margin-bottom: 8px; }
-
     .item-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border); }
     .item-row:last-child { border-bottom: none; }
     .item-row-info { flex: 1; min-width: 0; }
     .item-row-name { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .item-row-sub { font-size: 11px; color: var(--gray); margin-top: 2px; }
-
     .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; border-radius: 99px; font-size: 11px; font-weight: 600; }
     .badge-green { background: #dcfce7; color: var(--green); }
-    .badge-red { background: #fee2e2; color: var(--red); }
     .badge-gray { background: #f3f4f6; color: var(--gray); }
-
     .page { display: none; }
     .page.active { display: block; }
-
     .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
     .menu-card { background: var(--white); border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; }
     .menu-card-img { width: 100%; height: 160px; background: var(--pink-light); display: flex; align-items: center; justify-content: center; font-size: 48px; }
@@ -102,15 +80,10 @@
     .menu-card-name { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
     .menu-card-desc { font-size: 12px; color: var(--gray); line-height: 1.5; margin-bottom: 10px; }
     .menu-card-price { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--pink); }
-
     .upload-zone { border: 2px dashed var(--border); border-radius: 12px; padding: 24px; text-align: center; cursor: pointer; transition: all 0.2s; background: #fafafa; }
     .upload-zone:hover { border-color: var(--pink); background: var(--pink-light); }
     .upload-zone p { font-size: 13px; color: var(--gray); margin-top: 6px; }
     .upload-preview { width: 100%; max-height: 200px; object-fit: contain; border-radius: 10px; margin-top: 10px; display: none; }
-
-    /* Banner de alerta */
-    .alert-banner { background: #fff8ed; border: 1px solid #fcd34d; border-radius: 12px; padding: 14px 16px; font-size: 13px; color: #92400e; margin-bottom: 16px; line-height: 1.6; }
-    .alert-banner strong { display: block; margin-bottom: 4px; font-size: 14px; }
   </style>
 </head>
 <body>
@@ -122,18 +95,18 @@
   <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:24px;padding:40px 36px;width:100%;max-width:400px;margin:20px;position:relative;z-index:1;animation:loginFadeIn 0.5s ease;">
     <style>
       @keyframes loginFadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-      .login-field label{display:block;font-size:11px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
-      .login-field input{width:100%;padding:13px 16px;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.1);border-radius:12px;color:#fff;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s,background .2s;box-sizing:border-box;}
-      .login-field input::placeholder{color:rgba(255,255,255,0.25);}
-      .login-field input:focus{border-color:var(--pink);background:rgba(232,49,122,0.06);}
+      .lf label{display:block;font-size:11px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+      .lf input{width:100%;padding:13px 16px;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.1);border-radius:12px;color:#fff;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s,background .2s;box-sizing:border-box;}
+      .lf input::placeholder{color:rgba(255,255,255,0.25);}
+      .lf input:focus{border-color:var(--pink);background:rgba(232,49,122,0.06);}
     </style>
     <div style="display:flex;align-items:center;justify-content:center;margin-bottom:28px;">
-       <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--pink-dark));display:flex;align-items:center;justify-content:center;font-size:36px;box-shadow:0 0 30px rgba(232,49,122,0.2);">🍬</div>
+      <img src="logo.png" alt="Gigi" style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid rgba(232,49,122,0.4);box-shadow:0 0 30px rgba(232,49,122,0.2);" onerror="this.outerHTML='<div style=&quot;width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--pink-dark));display:flex;align-items:center;justify-content:center;font-size:36px;&quot;>🍬</div>'">
     </div>
     <div style="font-family:'DM Serif Display',serif;font-size:26px;color:#fff;text-align:center;line-height:1.2;margin-bottom:6px;">Docinhos da Gigi</div>
     <div style="font-size:13px;color:rgba(255,255,255,0.4);text-align:center;margin-bottom:32px;">iFood Manager · Painel de Catálogo</div>
 
-    <button onclick="tryAutoLogin(this)" id="auto-login-btn" style="width:100%;padding:12px;background:transparent;color:rgba(255,255,255,0.7);border:1.5px solid rgba(255,255,255,0.15);border-radius:12px;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;" onmouseover="this.style.borderColor='rgba(255,255,255,0.35)';this.style.color='#fff'" onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='rgba(255,255,255,0.7)'">
+    <button id="auto-login-btn" onclick="tryAutoLogin(this)" style="width:100%;padding:12px;background:transparent;color:rgba(255,255,255,0.7);border:1.5px solid rgba(255,255,255,0.15);border-radius:12px;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;">
       ✨ Entrar automaticamente
     </button>
 
@@ -141,7 +114,7 @@
       <div style="flex:1;height:1px;background:rgba(255,255,255,0.08);"></div>ou informe manualmente<div style="flex:1;height:1px;background:rgba(255,255,255,0.08);"></div>
     </div>
 
-    <div class="login-field" style="margin-bottom:14px;">
+    <div class="lf" style="margin-bottom:14px;">
       <label>Merchant ID</label>
       <input type="text" id="login-merchant-input" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" onkeydown="if(event.key==='Enter')doLogin()">
     </div>
@@ -151,7 +124,7 @@
       <span style="font-size:12px;color:rgba(255,255,255,0.4);">Lembrar neste navegador</span>
     </label>
 
-    <button onclick="doLogin()" id="login-btn" style="width:100%;padding:14px;background:var(--pink);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;" onmouseover="this.style.background='var(--pink-dark)'" onmouseout="this.style.background='var(--pink)'">
+    <button id="login-btn" onclick="doLogin()" style="width:100%;padding:14px;background:var(--pink);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;">
       Entrar no Painel →
     </button>
 
@@ -162,6 +135,7 @@
 <header class="header" id="app-header" style="display:none;">
   <div class="header-top">
     <div class="brand">
+      <img src="logo.png" alt="Gigi" onerror="this.style.display='none'">
       <div class="brand-text">
         <h1>Docinhos da Gigi</h1>
         <p>iFood Manager</p>
@@ -287,12 +261,17 @@
           <div class="form-row"><label>Status</label><select id="item-status"><option value="AVAILABLE">AVAILABLE</option><option value="UNAVAILABLE">UNAVAILABLE</option></select></div>
           <div class="form-row"><label>URL da Imagem</label><input type="text" id="item-image" placeholder="https://..."></div>
         </div>
-        <div class="form-row"><label>Categoria</label><div style="display:flex;gap:8px;"><select id="item-categoryId" style="flex:1;"><option value="">Clique em Carregar categorias →</option></select><button class="btn btn-secondary btn-sm" onclick="loadCategoriesForItems(this)" style="flex-shrink:0;white-space:nowrap;">↻ Carregar categorias</button></div></div>
+        <div class="form-row">
+          <label>Categoria</label>
+          <div style="display:flex;gap:8px;">
+            <select id="item-categoryId" style="flex:1;"><option value="">↻ Clique em Carregar categorias</option></select>
+            <button class="btn btn-secondary btn-sm" onclick="loadCategoriesForItems(this)" style="flex-shrink:0;white-space:nowrap;">↻ Carregar</button>
+          </div>
+        </div>
         <button class="btn btn-primary btn-full" onclick="saveItem(this)">Salvar Item</button>
         <div id="item-result" style="margin-top:12px;"></div>
       </div>
     </div>
-    <!-- Bloco de Preço -->
     <div class="card">
       <div class="card-header">
         <div class="card-icon">💰</div>
@@ -306,6 +285,18 @@
         </div>
         <button class="btn btn-primary btn-full" onclick="updateItemPrice(this)">Atualizar Preço</button>
         <div id="price-result" style="margin-top:12px;"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">🔄</div>
+        <div><div class="card-title">Alterar Status do Item</div><div class="card-subtitle">PATCH /merchants/{merchantId}/items/status</div></div>
+      </div>
+      <div class="card-body">
+        <div class="form-row"><label>ID do Item *</label><input type="text" id="status-item-id" placeholder="abc-123"></div>
+        <div class="form-row"><label>Novo Status</label><select id="status-item-value"><option value="AVAILABLE">AVAILABLE</option><option value="UNAVAILABLE">UNAVAILABLE</option></select></div>
+        <button class="btn btn-primary btn-full" onclick="updateItemStatus(this)">Atualizar Status</button>
+        <div id="status-item-result" style="margin-top:12px;"></div>
       </div>
     </div>
   </div>
@@ -327,6 +318,18 @@
         <div id="opt-price-result" style="margin-top:12px;"></div>
       </div>
     </div>
+    <div class="card">
+      <div class="card-header">
+        <div class="card-icon">🔀</div>
+        <div><div class="card-title">Alterar Status do Complemento</div><div class="card-subtitle">PATCH /merchants/{merchantId}/options/status</div></div>
+      </div>
+      <div class="card-body">
+        <div class="form-row"><label>ID do Complemento *</label><input type="text" id="opt-status-id" placeholder="opt-abc-123"></div>
+        <div class="form-row"><label>Novo Status</label><select id="opt-status-value"><option value="AVAILABLE">AVAILABLE</option><option value="UNAVAILABLE">UNAVAILABLE</option></select></div>
+        <button class="btn btn-primary btn-full" onclick="updateOptionStatus(this)">Atualizar Status</button>
+        <div id="opt-status-result" style="margin-top:12px;"></div>
+      </div>
+    </div>
   </div>
 
   <!-- IMAGENS -->
@@ -340,6 +343,7 @@
         <div class="upload-zone" id="upload-zone" onclick="document.getElementById('img-file').click()">
           <div style="font-size:32px;">🖼️</div>
           <p>Clique para selecionar ou arraste uma imagem</p>
+          <p style="font-size:11px;margin-top:4px;">JPG, PNG, WEBP</p>
         </div>
         <input type="file" id="img-file" accept="image/*" style="display:none" onchange="onImageSelect(event)">
         <img id="upload-preview" class="upload-preview" alt="Preview">
@@ -352,8 +356,15 @@
 
   <!-- CARDÁPIO -->
   <div id="page-menu" class="page">
+    <div style="margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;">
+      <div>
+        <div style="font-family:'DM Serif Display',serif;font-size:22px;">🍽️ Cardápio</div>
+        <div style="font-size:12px;color:var(--gray);margin-top:2px;">Evidência — imagem, nome, descrição e valor</div>
+      </div>
+      <button class="btn btn-secondary btn-sm" onclick="loadMenu()">↻ Carregar</button>
+    </div>
     <div id="menu-grid" class="menu-grid">
-      <div class="list-empty" style="grid-column:1/-1;">Carregando cardápio...</div>
+      <div class="list-empty" style="grid-column:1/-1;"><div class="icon">🍬</div>Clique em "Carregar" para ver o cardápio</div>
     </div>
   </div>
 
@@ -361,71 +372,37 @@
 
 <script>
 // ============================================================
-// CONFIG & AUTH (AQUI ESTÁ A CORREÇÃO)
+// CONFIG
 // ============================================================
 const API_BASE = '/api/ifood';
 const STORAGE_KEY = 'painel_gigi_merchant_id';
 let merchantId = '';
 let catalogs = [];
 
+// ============================================================
+// API — proxy para o iFood via Vercel Function
+// ============================================================
 async function api(path, method = 'GET', body = null) {
-  // 1. Substitui o {merchantId} se ele existir no caminho
-  let finalPath = path.replace('{merchantId}', merchantId);
-  
-  // 2. Garante que comece com /
-  if (!finalPath.startsWith('/')) finalPath = '/' + finalPath;
-  
-  // 3. Define a URL final. 
-  // Se for a chamada de login (merchants), ela vai pura. 
-  // Se for de catálogo, o path já vai estar com o ID trocado.
-  const url = API_BASE + finalPath;
-  
-  const opts = { 
-    method, 
-    headers: { 'Accept': 'application/json' } 
-  };
-
-  if (body) { 
-    opts.headers['Content-Type'] = 'application/json'; 
-    opts.body = JSON.stringify(body); 
+  if (!merchantId && path.includes('{merchantId}')) {
+    toast('Selecione um merchant primeiro!', 'warning');
+    throw new Error('no merchant');
   }
-
-  try {
-    const res = await fetch(url, opts);
-    
-    // Se não for OK (ex: 404), tenta ler o erro para te mostrar no painel
-    if (!res.ok) {
-        const errData = await res.json().catch(() => ({}));
-        return { ok: false, data: errData, status: res.status };
-    }
-
-    const data = await res.json().catch(() => ({}));
-    return { ok: true, data, status: res.status };
-  } catch (e) { 
-    return { ok: false, data: { message: "Erro de rede: " + e.message } }; 
+  const url = API_BASE + path.replace('{merchantId}', merchantId);
+  const opts = { method, headers: {} };
+  if (body) {
+    opts.headers['Content-Type'] = 'application/json';
+    opts.body = JSON.stringify(body);
   }
+  const res = await fetch(url, opts);
+  const text = await res.text();
+  let data;
+  try { data = JSON.parse(text); } catch { data = text; }
+  return { status: res.status, data, ok: res.ok };
 }
 
-  if (body) { 
-    opts.headers['Content-Type'] = 'application/json'; 
-    opts.body = JSON.stringify(body); 
-  }
-
-  try {
-    const res = await fetch(url, opts);
-    const text = await res.text();
-    let data;
-    try { 
-      data = JSON.parse(text); 
-    } catch { 
-      data = { message: text }; 
-    }
-    return { ok: res.ok, data, status: res.status };
-  } catch (e) { 
-    return { ok: false, data: { message: e.message } }; 
-  }
-}
-
+// ============================================================
+// UI HELPERS
+// ============================================================
 function showPage(name, el) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -443,222 +420,349 @@ function toast(msg, type = '') {
 
 function setLoading(btn, loading) {
   if (!btn) return;
-  if (loading) { btn._orig = btn.innerHTML; btn.disabled = true; btn.innerHTML = '<div class="spinner"></div>'; }
+  if (loading) { btn._orig = btn.innerHTML; btn.disabled = true; btn.innerHTML = '<div class="spinner"></div> Aguarde...'; }
   else { btn.innerHTML = btn._orig || 'OK'; btn.disabled = false; }
 }
 
 function resultBox(data, ok) {
   const color = ok ? 'var(--green)' : 'var(--red)';
-  return `<div style="background:#f8f8f8;border-radius:8px;padding:10px;border:1px solid ${color}33;margin-top:10px;">
-    <pre style="white-space:pre-wrap;font-size:11px;">${JSON.stringify(data, null, 2)}</pre>
+  return `<div style="background:#f8f8f8;border-radius:8px;padding:10px;border:1px solid ${color}33;">
+    <div style="font-weight:700;color:${color};margin-bottom:4px;">${ok ? '✅ Sucesso' : '❌ Erro'}</div>
+    <pre style="white-space:pre-wrap;word-break:break-all;font-size:11px;color:#444;">${JSON.stringify(data, null, 2)}</pre>
   </div>`;
 }
 
-// LÓGICA DE LOGIN
+// ============================================================
+// AUTH
+// ============================================================
+function showLoginError(msg) {
+  const el = document.getElementById('login-error');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
 function showAppScreen(id, name) {
   merchantId = id;
-  document.getElementById('merchant-chip-name').textContent = name || id.substring(0, 8);
+  document.getElementById('merchant-chip-name').textContent = name || id.substring(0, 18) + '...';
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('app-header').style.display = 'block';
   document.querySelector('main.main').style.display = 'block';
   loadCatalogs();
-  loadMenu();
+  toast('Bem-vinda ao painel, Gigi! 🍬', 'success');
 }
 
 function logout() {
   localStorage.removeItem(STORAGE_KEY);
-  location.reload();
+  merchantId = '';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('app-header').style.display = 'none';
+  document.querySelector('main.main').style.display = 'none';
+  toast('Merchant desconectado', '');
 }
 
 async function tryAutoLogin(btn) {
   setLoading(btn, true);
-  const res = await fetch(API_BASE + '/v1.0/merchants');
-  if (res.ok) {
-    const data = await res.json();
-    if (data && data.length > 0) {
-      const m = data[0];
-      if (document.getElementById('login-remember').checked) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({id: m.id, name: m.name}));
+  document.getElementById('login-error').style.display = 'none';
+  try {
+    const res = await fetch(API_BASE + '/v1.0/merchants');
+    if (res.ok) {
+      const data = await res.json();
+      const list = Array.isArray(data) ? data : [];
+      if (list.length > 0) {
+        const m = list[0];
+        if (document.getElementById('login-remember').checked) {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify({ id: m.id, name: m.name || m.id }));
+        }
+        showAppScreen(m.id, m.name || m.id);
+        return;
       }
-      showAppScreen(m.id, m.name);
-      return;
     }
+    showLoginError('Nenhum merchant automático encontrado. Informe o ID manualmente.');
+  } catch (e) {
+    showLoginError('Auto-login falhou. Informe o Merchant ID manualmente.');
   }
-  document.getElementById('login-error').textContent = 'Nenhum merchant automático. Informe o ID.';
-  document.getElementById('login-error').style.display = 'block';
   setLoading(btn, false);
 }
 
 async function doLogin() {
   const input = document.getElementById('login-merchant-input').value.trim();
-  if (!input) return;
+  if (!input) { showLoginError('Informe o Merchant ID!'); return; }
+
   const btn = document.getElementById('login-btn');
   setLoading(btn, true);
+  document.getElementById('login-error').style.display = 'none';
   merchantId = input;
-  const res = await api('/catalog/v1.0/merchants/{merchantId}/catalogs');
-  if (res.ok) {
-    if (document.getElementById('login-remember').checked) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({id: input, name: 'Loja Manual'}));
+
+  try {
+    const res = await api('/catalog/v1.0/merchants/{merchantId}/catalogs');
+    if (res.ok || res.status === 404) {
+      if (document.getElementById('login-remember').checked) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({ id: input, name: input.substring(0, 18) + '...' }));
+      }
+      showAppScreen(input, input.substring(0, 18) + '...');
+    } else {
+      showLoginError('Merchant ID inválido ou sem permissão. Verifique e tente novamente.');
+      merchantId = '';
+      setLoading(btn, false);
     }
-    showAppScreen(input, 'Loja: ' + input.substring(0, 6));
-  } else {
-    document.getElementById('login-error').textContent = 'ID Inválido ou sem acesso.';
-    document.getElementById('login-error').style.display = 'block';
+  } catch (e) {
+    showLoginError('Erro de conexão. Tente novamente.');
+    merchantId = '';
     setLoading(btn, false);
   }
 }
 
-// INICIALIZAÇÃO
-window.addEventListener('DOMContentLoaded', () => {
-  const saved = localStorage.getItem(STORAGE_KEY);
-  if (saved) {
-    const {id, name} = JSON.parse(saved);
-    showAppScreen(id, name);
-  }
-});
-
 // ============================================================
-// RESTANTE DAS FUNÇÕES (CATÁLOGOS, ITENS, CATEGORIAS, ETC)
-// ============================================================
-
-// ============================================================
-// CARREGAMENTO DE CATÁLOGOS CORRIGIDO
+// CATÁLOGOS
 // ============================================================
 async function loadCatalogs() {
+  if (!merchantId) return;
   const el = document.getElementById('catalogs-list');
-  const res = await api('/catalog/v1.0/merchants/{merchantId}/catalogs');
-  
-  if (res.ok) {
-    // Tenta pegar a lista de vários lugares possíveis na resposta
-    const list = res.data.catalogs || (Array.isArray(res.data) ? res.data : []);
-    
-    if (list.length === 0) {
-      el.innerHTML = '<div class="list-empty">Nenhum catálogo encontrado para este Merchant.</div>';
-      return;
-    }
-
-    el.innerHTML = list.map(c => {
-      // AJUSTE AQUI: Tenta pegar catalogId ou id
-      const idReal = c.catalogId || c.id || 'ID desconhecido';
-      return `
-        <div class="item-row">
-          <div><strong>ID:</strong> ${idReal} <br> <small>Contexto: ${c.context || 'N/A'}</small></div>
-          <span class="badge badge-green">${c.status || 'AVAILABLE'}</span>
-        </div>`;
-    }).join('');
-
-    // Popula os seletores de outras abas para você conseguir criar categorias e itens
-    ['cat-catalogId', 'newcat-catalogId'].forEach(sid => {
-        const s = document.getElementById(sid);
-        if(s) {
-            s.innerHTML = list.map(c => `<option value="${c.catalogId || c.id}">${c.context || (c.catalogId || c.id)}</option>`).join('');
-        }
-    });
-    toast('Catálogos carregados!', 'success');
-  } else {
-    el.innerHTML = '<div class="list-empty">Erro ao carregar: ' + (res.data.message || 'Verifique o Merchant ID') + '</div>';
-  }
-}
-
-// ============================================================
-// LISTAR CATEGORIAS (ABA CATEGORIAS)
-// ============================================================
-async function loadCategories() {
-  const catalogSelect = document.getElementById('cat-catalogId');
-  const catalogId = catalogSelect.value;
-  
-  if (!catalogId) { 
-    toast('Selecione um catálogo na lista acima!', 'warning'); 
-    return; 
-  }
-  
-  const el = document.getElementById('categories-list');
   el.innerHTML = '<div class="list-empty"><div class="spinner" style="border-color:rgba(0,0,0,.1);border-top-color:var(--pink);margin:0 auto;width:24px;height:24px;border-width:3px;"></div></div>';
-  
-  const res = await api(`/catalog/v1.0/merchants/{merchantId}/catalogs/${catalogId}/categories`);
-  
-  if (res.ok) {
-    // O iFood pode retornar as categorias dentro de um objeto ou como um array direto
-    const cats = res.data.categories || (Array.isArray(res.data) ? res.data : []);
-    
-    if (cats.length === 0) {
-      el.innerHTML = '<div class="list-empty">Nenhuma categoria encontrada neste catálogo.</div>';
+  try {
+    const res = await api('/catalog/v1.0/merchants/{merchantId}/catalogs');
+    catalogs = Array.isArray(res.data) ? res.data : (res.data?.catalogs || []);
+    if (!catalogs.length) {
+      el.innerHTML = '<div class="list-empty"><div class="icon">📭</div>Nenhum catálogo encontrado</div>';
       return;
     }
-
-    el.innerHTML = cats.map(c => `
+    el.innerHTML = catalogs.map(c => `
       <div class="item-row">
         <div class="item-row-info">
-          <div class="item-row-name">${c.name || 'Sem nome'}</div>
-          <div class="item-row-sub">ID: ${c.id} | Ordem: ${c.index ?? 'N/A'}</div>
+          <div class="item-row-name">${c.catalogId || c.id}</div>
+          <div class="item-row-sub">Status: ${c.status || '—'} · Contexto: ${c.context || '—'}</div>
         </div>
-        <span class="badge ${c.status === 'AVAILABLE' ? 'badge-green' : 'badge-gray'}">${c.status || 'OFF'}</span>
+        <span class="badge ${c.status === 'AVAILABLE' ? 'badge-green' : 'badge-gray'}">${c.status || '?'}</span>
       </div>`).join('');
-    
-    toast(cats.length + ' categorias encontradas!', 'success');
-  } else {
-    el.innerHTML = resultBox(res.data, false);
-    toast('Erro ao buscar categorias', 'error');
+    ['cat-catalogId', 'newcat-catalogId'].forEach(sid => {
+      const s = document.getElementById(sid);
+      if (!s) return;
+      s.innerHTML = '<option value="">Selecione um catálogo...</option>';
+      catalogs.forEach(c => { s.innerHTML += `<option value="${c.catalogId || c.id}">${(c.catalogId || c.id).substring(0,30)}${c.context ? ' ('+c.context+')' : ''}</option>`; });
+    });
+  } catch(e) {
+    el.innerHTML = `<div class="list-empty">Erro: ${e.message}</div>`;
   }
 }
 
 // ============================================================
-// CARREGAR CATEGORIAS PARA O SELECT (ABA ITENS)
+// CATEGORIAS
 // ============================================================
+async function loadCategories() {
+  const catalogId = document.getElementById('cat-catalogId').value;
+  if (!catalogId) { toast('Selecione um catálogo!', 'warning'); return; }
+  const el = document.getElementById('categories-list');
+  el.innerHTML = '<div class="list-empty"><div class="spinner" style="border-color:rgba(0,0,0,.1);border-top-color:var(--pink);margin:0 auto;width:24px;height:24px;border-width:3px;"></div></div>';
+  const res = await api(`/catalog/v1.0/merchants/{merchantId}/catalogs/${catalogId}/categories`);
+  if (res.ok) {
+    const cats = Array.isArray(res.data) ? res.data : (res.data?.categories || []);
+    el.innerHTML = cats.length
+      ? cats.map(c => `<div class="item-row"><div class="item-row-info"><div class="item-row-name">${c.name || c.id}</div><div class="item-row-sub">ID: ${c.id || '—'} · Ordem: ${c.index ?? '—'}</div></div><span class="badge ${c.status === 'AVAILABLE' ? 'badge-green' : 'badge-gray'}">${c.status || '?'}</span></div>`).join('')
+      : '<div class="list-empty"><div class="icon">🗂️</div>Nenhuma categoria encontrada</div>';
+  } else { el.innerHTML = resultBox(res.data, false); }
+}
+
 async function loadCategoriesForItems(btn) {
   setLoading(btn, true);
-  
-  // Primeiro buscamos os catálogos para pegar o ID do primeiro (geralmente o principal da Gigi)
   const catRes = await api('/catalog/v1.0/merchants/{merchantId}/catalogs');
-  const catalogsList = catRes.data.catalogs || (Array.isArray(catRes.data) ? catRes.data : []);
-  
-  if (!catalogsList.length) {
-    toast("Nenhum catálogo encontrado!", "error");
-    setLoading(btn, false);
-    return;
-  }
-
-  // Pegamos o ID do primeiro catálogo da lista
-  const firstCatalogId = catalogsList[0].catalogId || catalogsList[0].id;
-  
-  const res = await api(`/catalog/v1.0/merchants/{merchantId}/catalogs/${firstCatalogId}/categories`);
-  
+  const cats = Array.isArray(catRes.data) ? catRes.data : (catRes.data?.catalogs || []);
+  if (!cats.length) { toast('Nenhum catálogo encontrado!', 'error'); setLoading(btn, false); return; }
+  const catalogId = cats[0].catalogId || cats[0].id;
+  const res = await api(`/catalog/v1.0/merchants/{merchantId}/catalogs/${catalogId}/categories`);
   if (res.ok) {
-    const categories = res.data.categories || (Array.isArray(res.data) ? res.data : []);
-    const sel = document.getElementById("item-categoryId");
-    
-    if (sel) {
-      sel.innerHTML = '<option value="">Selecione a categoria...</option>';
-      categories.forEach(c => {
-        sel.innerHTML += `<option value="${c.id}">${c.name || c.id}</option>`;
-      });
-      toast(categories.length + " categorias carregadas no formulário!", "success");
-    }
-  } else {
-    toast("Erro ao carregar categorias para seleção", "error");
-  }
+    const categories = Array.isArray(res.data) ? res.data : (res.data?.categories || []);
+    const sel = document.getElementById('item-categoryId');
+    sel.innerHTML = '<option value="">Selecione a categoria...</option>';
+    categories.forEach(c => { sel.innerHTML += `<option value="${c.id}">${c.name || c.id}</option>`; });
+    toast(categories.length + ' categorias carregadas!', 'success');
+  } else { toast('Erro ao carregar categorias!', 'error'); }
   setLoading(btn, false);
 }
 
+async function createCategory(btn) {
+  const catalogId = document.getElementById('newcat-catalogId').value;
+  const name = document.getElementById('newcat-name').value.trim();
+  if (!catalogId) { toast('Selecione um catálogo!', 'warning'); return; }
+  if (!name) { toast('Informe o nome!', 'warning'); return; }
+  setLoading(btn, true);
+  const res = await api(`/catalog/v1.0/merchants/{merchantId}/catalogs/${catalogId}/categories`, 'POST', {
+    name,
+    index: parseInt(document.getElementById('newcat-index').value) || 1,
+    status: document.getElementById('newcat-status').value,
+    template: document.getElementById('newcat-template').value
+  });
+  document.getElementById('create-cat-result').innerHTML = resultBox(res.data, res.ok);
+  toast(res.ok ? 'Categoria criada!' : 'Erro!', res.ok ? 'success' : 'error');
+  setLoading(btn, false);
+}
+
+// ============================================================
+// ITENS
+// ============================================================
 async function saveItem(btn) {
-    setLoading(btn, true);
-    const payload = {
-        name: document.getElementById('item-name').value,
-        price: { value: Math.round(parseFloat(document.getElementById('item-price').value)*100), currency: 'BRL' },
-        status: document.getElementById('item-status').value,
-        categoryId: document.getElementById('item-categoryId').value
-    };
-    const res = await api('/catalog/v1.0/merchants/{merchantId}/items', 'PUT', payload);
-    document.getElementById('item-result').innerHTML = resultBox(res.data, res.ok);
-    setLoading(btn, false);
+  const name = document.getElementById('item-name').value.trim();
+  const price = parseFloat(document.getElementById('item-price').value);
+  if (!name) { toast('Informe o nome!', 'warning'); return; }
+  if (!price) { toast('Informe o preço!', 'warning'); return; }
+  setLoading(btn, true);
+  const id = document.getElementById('item-id').value.trim();
+  const origPrice = parseFloat(document.getElementById('item-orig-price').value);
+  const payload = {
+    ...(id ? { id } : {}),
+    name,
+    description: document.getElementById('item-desc').value.trim(),
+    price: { value: Math.round(price * 100), currency: 'BRL', ...(origPrice ? { originalValue: Math.round(origPrice * 100) } : {}) },
+    status: document.getElementById('item-status').value,
+    ...(document.getElementById('item-image').value ? { logoUrl: document.getElementById('item-image').value.trim() } : {}),
+    ...(document.getElementById('item-categoryId').value ? { categoryId: document.getElementById('item-categoryId').value } : {}),
+  };
+  const res = await api('/catalog/v1.0/merchants/{merchantId}/items', 'PUT', payload);
+  document.getElementById('item-result').innerHTML = resultBox(res.data, res.ok);
+  toast(res.ok ? 'Item salvo!' : 'Erro!', res.ok ? 'success' : 'error');
+  setLoading(btn, false);
 }
 
+async function updateItemPrice(btn) {
+  const itemId = document.getElementById('price-item-id').value.trim();
+  const price = parseFloat(document.getElementById('price-value').value);
+  if (!itemId || !price) { toast('Preencha os campos!', 'warning'); return; }
+  setLoading(btn, true);
+  const origPrice = parseFloat(document.getElementById('price-original').value);
+  const res = await api('/catalog/v1.0/merchants/{merchantId}/items/price', 'PATCH', {
+    itemId, price: { value: Math.round(price * 100), currency: 'BRL', ...(origPrice ? { originalValue: Math.round(origPrice * 100) } : {}) }
+  });
+  document.getElementById('price-result').innerHTML = resultBox(res.data, res.ok);
+  toast(res.ok ? 'Preço atualizado!' : 'Erro!', res.ok ? 'success' : 'error');
+  setLoading(btn, false);
+}
+
+async function updateItemStatus(btn) {
+  const itemId = document.getElementById('status-item-id').value.trim();
+  if (!itemId) { toast('Informe o ID!', 'warning'); return; }
+  setLoading(btn, true);
+  const res = await api('/catalog/v1.0/merchants/{merchantId}/items/status', 'PATCH', { itemId, status: document.getElementById('status-item-value').value });
+  document.getElementById('status-item-result').innerHTML = resultBox(res.data, res.ok);
+  toast(res.ok ? 'Status atualizado!' : 'Erro!', res.ok ? 'success' : 'error');
+  setLoading(btn, false);
+}
+
+// ============================================================
+// COMPLEMENTOS
+// ============================================================
+async function updateOptionPrice(btn) {
+  const optionId = document.getElementById('opt-price-id').value.trim();
+  const price = parseFloat(document.getElementById('opt-price-value').value);
+  if (!optionId || !price) { toast('Preencha os campos!', 'warning'); return; }
+  setLoading(btn, true);
+  const origPrice = parseFloat(document.getElementById('opt-price-original').value);
+  const res = await api('/catalog/v1.0/merchants/{merchantId}/options/price', 'PATCH', {
+    optionId, price: { value: Math.round(price * 100), currency: 'BRL', ...(origPrice ? { originalValue: Math.round(origPrice * 100) } : {}) }
+  });
+  document.getElementById('opt-price-result').innerHTML = resultBox(res.data, res.ok);
+  toast(res.ok ? 'Preço atualizado!' : 'Erro!', res.ok ? 'success' : 'error');
+  setLoading(btn, false);
+}
+
+async function updateOptionStatus(btn) {
+  const optionId = document.getElementById('opt-status-id').value.trim();
+  if (!optionId) { toast('Informe o ID!', 'warning'); return; }
+  setLoading(btn, true);
+  const res = await api('/catalog/v1.0/merchants/{merchantId}/options/status', 'PATCH', { optionId, status: document.getElementById('opt-status-value').value });
+  document.getElementById('opt-status-result').innerHTML = resultBox(res.data, res.ok);
+  toast(res.ok ? 'Status atualizado!' : 'Erro!', res.ok ? 'success' : 'error');
+  setLoading(btn, false);
+}
+
+// ============================================================
+// UPLOAD DE IMAGEM
+// ============================================================
+let selectedImageFile = null;
+
+function onImageSelect(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  selectedImageFile = file;
+  document.getElementById('img-selected-name').textContent = `📄 ${file.name} (${(file.size/1024).toFixed(1)} KB)`;
+  document.getElementById('upload-btn').disabled = false;
+  const reader = new FileReader();
+  reader.onload = ev => { const p = document.getElementById('upload-preview'); p.src = ev.target.result; p.style.display = 'block'; };
+  reader.readAsDataURL(file);
+}
+
+const zone = document.getElementById('upload-zone');
+zone.addEventListener('dragover', e => { e.preventDefault(); zone.style.borderColor = 'var(--pink)'; });
+zone.addEventListener('dragleave', () => zone.style.borderColor = '');
+zone.addEventListener('drop', e => {
+  e.preventDefault(); zone.style.borderColor = '';
+  const file = e.dataTransfer.files[0];
+  if (file) { selectedImageFile = file; onImageSelect({ target: { files: [file] } }); }
+});
+
+async function uploadImage(btn) {
+  if (!selectedImageFile || !merchantId) { toast('Selecione uma imagem!', 'warning'); return; }
+  setLoading(btn, true);
+  const formData = new FormData();
+  formData.append('file', selectedImageFile);
+  try {
+    const res = await fetch(`${API_BASE}/catalog/v1.0/merchants/${merchantId}/image/upload`, { method: 'POST', body: formData });
+    const text = await res.text();
+    let data; try { data = JSON.parse(text); } catch { data = text; }
+    document.getElementById('upload-result').innerHTML = resultBox(data, res.ok);
+    toast(res.ok ? 'Upload realizado!' : 'Erro no upload', res.ok ? 'success' : 'error');
+  } catch(e) { toast('Erro: ' + e.message, 'error'); }
+  setLoading(btn, false);
+}
+
+// ============================================================
+// CARDÁPIO
+// ============================================================
 async function loadMenu() {
-    // Carregamento visual do cardápio...
-    document.getElementById('menu-grid').innerHTML = '<div class="list-empty">Cardápio carregado!</div>';
+  if (!merchantId) { toast('Selecione um merchant!', 'warning'); return; }
+  const grid = document.getElementById('menu-grid');
+  grid.innerHTML = '<div class="list-empty" style="grid-column:1/-1;"><div class="spinner" style="border-color:rgba(0,0,0,.1);border-top-color:var(--pink);margin:0 auto;width:24px;height:24px;border-width:3px;"></div></div>';
+  const catRes = await api('/catalog/v1.0/merchants/{merchantId}/catalogs');
+  if (!catRes.ok) { grid.innerHTML = '<div class="list-empty">Erro ao carregar catálogos</div>'; return; }
+  const cats = Array.isArray(catRes.data) ? catRes.data : (catRes.data?.catalogs || []);
+  const allItems = [];
+  for (const cat of cats.slice(0, 3)) {
+    const cid = cat.catalogId || cat.id;
+    const cRes = await api(`/catalog/v1.0/merchants/{merchantId}/catalogs/${cid}/categories`);
+    if (!cRes.ok) continue;
+    const categories = Array.isArray(cRes.data) ? cRes.data : (cRes.data?.categories || []);
+    categories.forEach(cat => (cat.items || cat.products || []).forEach(it => allItems.push({ ...it, categoryName: cat.name })));
+  }
+  if (!allItems.length) {
+    grid.innerHTML = '<div class="list-empty" style="grid-column:1/-1;"><div class="icon">🍬</div>Nenhum item encontrado. Cadastre itens na aba Itens.</div>';
+    return;
+  }
+  grid.innerHTML = allItems.map(item => {
+    const price = item.price?.value ? (item.price.value/100).toFixed(2).replace('.',',') : (item.price || '—');
+    const img = item.logoUrl || item.imageUrl || '';
+    return `<div class="menu-card">
+      <div class="menu-card-img">${img ? `<img src="${img}" alt="${item.name}" onerror="this.parentElement.innerHTML='🍬'">` : '🍬'}</div>
+      <div class="menu-card-body">
+        ${item.categoryName ? `<div style="font-size:10px;color:var(--gray);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">${item.categoryName}</div>` : ''}
+        <div class="menu-card-name">${item.name || 'Item'}</div>
+        <div class="menu-card-desc">${item.description || 'Sem descrição'}</div>
+        <div class="menu-card-price">R$ ${price}</div>
+      </div></div>`;
+  }).join('');
 }
 
-// (As demais funções de PATCH preço e upload seguem a mesma lógica de chamada api())
+// ============================================================
+// INIT — checa localStorage primeiro
+// ============================================================
+window.addEventListener('DOMContentLoaded', () => {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const { id, name } = JSON.parse(saved);
+      if (id) { showAppScreen(id, name); return; }
+    }
+  } catch(e) {}
+  // Nada salvo — mostra tela de login
+  document.getElementById('login-screen').style.display = 'flex';
+});
 </script>
 </body>
 </html>
