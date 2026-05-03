@@ -474,29 +474,66 @@ window.addEventListener('DOMContentLoaded', () => {
 // RESTANTE DAS FUNÇÕES (CATÁLOGOS, ITENS, CATEGORIAS, ETC)
 // ============================================================
 
+// ============================================================
+// CARREGAMENTO DE CATÁLOGOS CORRIGIDO
+// ============================================================
 async function loadCatalogs() {
   const el = document.getElementById('catalogs-list');
   const res = await api('/catalog/v1.0/merchants/{merchantId}/catalogs');
+  
   if (res.ok) {
-    const list = res.data.catalogs || res.data || [];
-    el.innerHTML = list.map(c => `<div class="item-row"><div>${c.id}</div><span class="badge badge-green">${c.status}</span></div>`).join('');
-    // Popula selects
+    // Tenta pegar a lista de vários lugares possíveis na resposta
+    const list = res.data.catalogs || (Array.isArray(res.data) ? res.data : []);
+    
+    if (list.length === 0) {
+      el.innerHTML = '<div class="list-empty">Nenhum catálogo encontrado para este Merchant.</div>';
+      return;
+    }
+
+    el.innerHTML = list.map(c => {
+      // AJUSTE AQUI: Tenta pegar catalogId ou id
+      const idReal = c.catalogId || c.id || 'ID desconhecido';
+      return `
+        <div class="item-row">
+          <div><strong>ID:</strong> ${idReal} <br> <small>Contexto: ${c.context || 'N/A'}</small></div>
+          <span class="badge badge-green">${c.status || 'AVAILABLE'}</span>
+        </div>`;
+    }).join('');
+
+    // Popula os seletores de outras abas para você conseguir criar categorias e itens
     ['cat-catalogId', 'newcat-catalogId'].forEach(sid => {
         const s = document.getElementById(sid);
         if(s) {
-            s.innerHTML = list.map(c => `<option value="${c.id}">${c.id}</option>`).join('');
+            s.innerHTML = list.map(c => `<option value="${c.catalogId || c.id}">${c.context || (c.catalogId || c.id)}</option>`).join('');
         }
     });
+    toast('Catálogos carregados!', 'success');
+  } else {
+    el.innerHTML = '<div class="list-empty">Erro ao carregar: ' + (res.data.message || 'Verifique o Merchant ID') + '</div>';
   }
 }
 
+// ============================================================
+// CARREGAMENTO DE CATEGORIAS CORRIGIDO
+// ============================================================
 async function loadCategories() {
   const catalogId = document.getElementById('cat-catalogId').value;
+  if (!catalogId) { toast('Selecione um catálogo primeiro', 'warning'); return; }
+  
   const el = document.getElementById('categories-list');
+  el.innerHTML = '<div class="spinner"></div>';
+  
   const res = await api(`/catalog/v1.0/merchants/{merchantId}/catalogs/${catalogId}/categories`);
+  
   if (res.ok) {
-    const cats = res.data.categories || res.data || [];
-    el.innerHTML = cats.map(c => `<div class="item-row"><div>${c.name}</div><span class="badge badge-green">ID: ${c.id}</span></div>`).join('');
+    const cats = res.data.categories || (Array.isArray(res.data) ? res.data : []);
+    el.innerHTML = cats.map(c => `
+      <div class="item-row">
+        <div>${c.name}</div>
+        <span class="badge badge-gray" style="font-size:9px">ID: ${c.id}</span>
+      </div>`).join('');
+  } else {
+    el.innerHTML = '<div class="list-empty">Erro ao carregar categorias.</div>';
   }
 }
 
