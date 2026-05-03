@@ -245,7 +245,7 @@
           <div class="form-row"><label>Status</label><select id="item-status"><option value="AVAILABLE">AVAILABLE</option><option value="UNAVAILABLE">UNAVAILABLE</option></select></div>
           <div class="form-row"><label>URL da Imagem</label><input type="text" id="item-image" placeholder="https://..."></div>
         </div>
-        <div class="form-row"><label>ID da Categoria</label><input type="text" id="item-categoryId" placeholder="Ex: cat-123"></div>
+        <div class="form-row"><label>Categoria</label><div style="display:flex;gap:8px;"><select id="item-categoryId" style="flex:1;"><option value="">Clique em Carregar categorias →</option></select><button class="btn btn-secondary btn-sm" onclick="loadCategoriesForItems(this)" style="flex-shrink:0;white-space:nowrap;">↻ Carregar categorias</button></div></div>
         <button class="btn btn-primary btn-full" onclick="saveItem(this)">Salvar Item</button>
         <div id="item-result" style="margin-top:12px;"></div>
       </div>
@@ -500,6 +500,25 @@ async function loadCategories() {
       ? cats.map(c => `<div class="item-row"><div class="item-row-info"><div class="item-row-name">${c.name || c.id}</div><div class="item-row-sub">ID: ${c.id || '—'} · Ordem: ${c.index ?? '—'}</div></div><span class="badge ${c.status === 'AVAILABLE' ? 'badge-green' : 'badge-gray'}">${c.status || '?'}</span></div>`).join('')
       : '<div class="list-empty"><div class="icon">🗂️</div>Nenhuma categoria encontrada</div>';
   } else { el.innerHTML = resultBox(res.data, false); }
+}
+
+
+async function loadCategoriesForItems(btn) {
+  if (!merchantId) { toast("Selecione um merchant!", "warning"); return; }
+  setLoading(btn, true);
+  const catRes = await api("/catalog/v1.0/merchants/{merchantId}/catalogs");
+  const cats = Array.isArray(catRes.data) ? catRes.data : (catRes.data?.catalogs || []);
+  if (!cats.length) { toast("Nenhum catálogo encontrado!", "error"); setLoading(btn, false); return; }
+  const catalogId = cats[0].catalogId || cats[0].id;
+  const res = await api("/catalog/v1.0/merchants/{merchantId}/catalogs/" + catalogId + "/categories");
+  if (res.ok) {
+    const categories = Array.isArray(res.data) ? res.data : (res.data?.categories || []);
+    const sel = document.getElementById("item-categoryId");
+    sel.innerHTML = "<option value="">Selecione a categoria...</option>";
+    categories.forEach(c => { sel.innerHTML += "<option value="" + c.id + "">" + (c.name || c.id) + "</option>"; });
+    toast(categories.length + " categorias carregadas!", "success");
+  } else { toast("Erro ao carregar categorias!", "error"); }
+  setLoading(btn, false);
 }
 
 async function createCategory(btn) {
