@@ -369,14 +369,37 @@ let merchantId = '';
 let catalogs = [];
 
 async function api(path, method = 'GET', body = null) {
-  const url = API_BASE + path.replace('{merchantId}', merchantId);
-  const opts = { method, headers: {} };
-  if (body) { opts.headers['Content-Type'] = 'application/json'; opts.body = JSON.stringify(body); }
+  // 1. Limpa o path: remove barras extras no início se existirem
+  const cleanPath = path.startsWith('/') ? path : '/' + path;
+  
+  // 2. Monta a URL garantindo que o merchantId seja substituído corretamente
+  const url = API_BASE + cleanPath.replace('{merchantId}', merchantId);
+  
+  const opts = { 
+    method, 
+    headers: {
+      'Accept': 'application/json'
+    } 
+  };
+
+  if (body) { 
+    opts.headers['Content-Type'] = 'application/json'; 
+    opts.body = JSON.stringify(body); 
+  }
+
   try {
     const res = await fetch(url, opts);
-    const data = await res.json().catch(() => ({}));
+    const text = await res.text();
+    let data;
+    try { 
+      data = JSON.parse(text); 
+    } catch { 
+      data = { message: text }; 
+    }
     return { ok: res.ok, data, status: res.status };
-  } catch (e) { return { ok: false, data: e }; }
+  } catch (e) { 
+    return { ok: false, data: { message: e.message } }; 
+  }
 }
 
 function showPage(name, el) {
